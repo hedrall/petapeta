@@ -1,12 +1,9 @@
 <template>
   <section>
+    <el-button type="primary">テスト</el-button>
+    <a class="button is-primary">Primary</a>
     <h1 class="header">Nuxt TypeScript Starter</h1>
     <div class="cards">
-      <Card
-        v-for="person in people"
-        :key="person.id"
-        :person="person"
-      ></Card>
     </div>
   </section>
 </template>
@@ -18,11 +15,9 @@ import {
 } from "nuxt-property-decorator"
 import { State } from "vuex-class"
 import { Person } from "~/types";
-import Card from "~/components/Card.vue"
 
 @Component({
   components: {
-    Card
   }
 })
 export default class extends Vue {
