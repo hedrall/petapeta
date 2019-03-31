@@ -19,7 +19,7 @@ const config: NuxtConfiguration = {
     // "~/assets/css/main.css",
     'element-ui/lib/theme-chalk/index.css',
     // node.js module but we specify the pre-processor
-    // { src: '~assets/scss/main.scss', lang: 'scss' }
+    { src: '~assets/scss/main.scss', lang: 'scss' },
     '@fortawesome/fontawesome-free-webfonts',
     '@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
     '@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',
