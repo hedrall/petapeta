@@ -16,14 +16,23 @@ const config: NuxtConfiguration = {
   },
   loading: { color: "#3B8070" },
   css: [
-    "~/assets/css/main.css",
+    // "~/assets/css/main.css",
     'element-ui/lib/theme-chalk/index.css',
     // node.js module but we specify the pre-processor
-    { src: '~assets/scss/main.scss', lang: 'scss' }
+    // { src: '~assets/scss/main.scss', lang: 'scss' }
+    '@fortawesome/fontawesome-free-webfonts',
+    '@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
+    '@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',
+    '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
   ],
+  styleResources: {
+    // your settings here
+    sass: ['~/assets/scss/main.scss']
+  },
   build: {},
   modules: [
     "@nuxtjs/axios",
+    '@nuxtjs/style-resources'
   ],
   plugins: [
     '~plugins/element-ui'
