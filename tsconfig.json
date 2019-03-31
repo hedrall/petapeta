@@ -1,0 +1,19 @@
+{
+  "extends": "@nuxt/typescript",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "strict": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "types": [
+      "@nuxt/vue-app",
+      "@types/node",
+      "@types/webpack-env"
+    ],
+    "paths": {
+      "~/*": ["./src/app/*"]
+    }
+  }
+}
