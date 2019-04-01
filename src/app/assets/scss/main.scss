@@ -12,10 +12,11 @@ $family-serif: auto;
 
 $main-theme: #409eff;
 $text-color: #44515f;
+$natural-border: #c3c5e4;
 
 // 3. Set the derived variables
 // Use the new pink as the primary color
-$primary: $pink;
+$primary: $main-theme;
 $primary-invert: $pink-invert;
 // Use the existing orange as the danger color
 $danger: $orange;

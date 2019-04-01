@@ -1,4 +1,4 @@
-import { EventLogsState } from '~/types';
+import { EventLogsState, RootState } from '~/types';
 import { GetterTree, MutationTree, ActionTree } from "vuex";
 import { EventLog } from '~/types/eventLog';
 
@@ -6,7 +6,7 @@ export const state = (): EventLogsState => ({
   eventLogs: [] = []
 })
 
-export const getters: GetterTree<EventLogsState, EventLogsState> = {
+export const getters: GetterTree<EventLogsState, RootState> = {
   getEventLogs(state: EventLogsState): EventLog[] {
     return state.eventLogs
   }
@@ -21,13 +21,13 @@ export const mutations: MutationTree<EventLogsState> = {
   }
 }
 
-export const actions: ActionTree<EventLogsState, EventLogsState> = {
+export const actions: ActionTree<EventLogsState, RootState> = {
   async fetchEventLogs({commit}) {
 
     const result = await this.$axios.$get("./latest-event-logs.json")
 
 
 
-    commit("setEventLogs", result.slice(0, 5).map( _ => new EventLog(_)))
+    commit("setEventLogs", result.slice(0, 20).map( _ => new EventLog(_)))
   }
 }

@@ -1,7 +1,7 @@
 [
   {
     "url": "https://url1.com",
-    "state": 1,
+    "state": 0,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
     "last_updated": "2019-04-01 00:00"
@@ -15,7 +15,7 @@
   },
   {
     "url": "https://url3.com",
-    "state": 1,
+    "state": 0,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
     "last_updated": "2019-04-01 00:00"
@@ -29,7 +29,7 @@
   },
   {
     "url": "https://url5.com",
-    "state": 1,
+    "state": 0,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
     "last_updated": "2019-04-01 00:00"
