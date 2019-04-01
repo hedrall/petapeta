@@ -3,15 +3,15 @@
 
     <!-- イベントログ -->
     <section class="section">
-      <span class="tag is-primary">イベントログ</span>
+      <span class="tag is-primary is-medium">イベントログ</span>
       <div class="table-wrapper">
         <table class="table is-fullwidth is-hoverable is-narrow">
           <tbody>
           <tr v-for="log in getEventLogs">
-            <td v-if="log.state === LogStatuses.open">
+            <td v-if="log.state === PostStatuses.open">
               {{log.url}}の期限が終了し、デポジット {{ log.deposit }}ETH が分配されました。
             </td>
-            <td v-else-if="log.state === LogStatuses.close">
+            <td v-else-if="log.state === PostStatuses.close">
               {{log.url}}の拡散協力依頼が開始しました。( デポジット: {{ log.deposit }} ETH )
             </td>
           </tr>
@@ -22,7 +22,7 @@
 
     <!-- 投稿一覧 -->
     <section class="section">
-      <span class="tag is-primary">投稿一覧</span>
+      <span class="tag is-primary is-medium">投稿一覧</span>
 
       <div class="post-container columns is-multiline">
         <div class="column is-4" v-for="post of getPosts">
@@ -41,17 +41,22 @@
                 <!--</figure>-->
                 <!--</div>-->
                 <div class="media-content">
-                  <p class="title is-4">John Smith</p>
-                  <p class="subtitle is-6">@johnsmith</p>
+                  <div class="status has-text-right">
+                    <span class="tag is-info is-right" v-if="post.status === PostStatuses.open">募集中</span>
+                    <span class="tag is-light" v-if="post.status === PostStatuses.close">終了</span>
+                  </div>
+                  <a :href="post.url" class="title is-6">{{ post.url }}</a>
+                  <p class="subtitle is-7">{{ post.public_address }}</p>
                 </div>
               </div>
 
               <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                <div class="post-message">
+                  {{ post.message }}
+                </div>
+                <!--<a href="#">#css</a> <a href="#">#responsive</a>-->
+                <!--<br>-->
+                <time :datetime="2016-1-1">{{ post.deadline }}</time>
               </div>
             </div>
           </div>
@@ -70,7 +75,7 @@
 <script lang="ts">
   import { Component, Vue } from "nuxt-property-decorator";
   import { Action, Getter } from "vuex-class";
-  import { LogStatuses } from "~/types/eventLog";
+  import { PostStatuses } from '~/types/types';
 
   @Component( {
     async mounted() {
@@ -83,7 +88,7 @@
     },
     async asyncData( { store } ) {
       return {
-        LogStatuses
+        PostStatuses
       };
       // await store.dispatch('event-logs/fetchEventLogs');
     },
@@ -114,5 +119,45 @@
 
   .section + .section {
     padding-top: 0;
+  }
+
+  .card {
+    min-height: 100%;
+
+    .card-content {
+      .media {
+        .media-content {
+          width: 100%;
+
+          > .title, .subtitle {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+          }
+
+          > a {
+            display: block;
+            color: $main-theme;
+          }
+        }
+      }
+
+      .content {
+        .post-message {
+          display: -webkit-box;
+          /* autoprefixer: off */
+          -webkit-box-orient: vertical;
+          /* autoprefixer: on */
+          -webkit-line-clamp: 3;
+          overflow: hidden;
+        }
+
+        time {
+          margin-top: 7px;
+          display: block;
+        }
+      }
+    }
   }
 </style>

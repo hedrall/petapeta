@@ -16,7 +16,7 @@ export class Post {
   deadline: string;
 
   // 状態
-  state: PostState;
+  status: PostState;
 
   // 依頼者のパブリックアドレス ( 返金用 )
   public_address: string;

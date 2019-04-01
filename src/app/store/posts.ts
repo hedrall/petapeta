@@ -4,13 +4,15 @@ import { Post } from '~/types/post';
 
 export const state = (): PostsState => ({
   posts:    [] = [],
-  page:     0,
+  page:     1,
   per_page: 9
 });
 
 export const getters: GetterTree<PostsState, RootState> = {
   getPosts( state: PostsState ): Post[] {
-    return state.posts;
+    return state.posts.slice(
+      ( state.page - 1 ) * state.per_page, state.per_page
+    );
   }
 };
 
@@ -24,12 +26,13 @@ export const mutations: MutationTree<PostsState> = {
 };
 
 export const actions: ActionTree<PostsState, RootState> = {
-  async fetchPosts( { commit, state } ) {
+  async fetchPosts( { commit } ) {
+    // TODO: ページごとに取得する
     const result = await this.$axios.$get( '/api/posts.json' );
 
     commit(
       'setPosts',
-      result.slice( 0, state.per_page ).map( _ => new Post( _ ) )
+      result.map( _ => new Post( _ ) )
     );
   }
 };

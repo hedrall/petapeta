@@ -11,9 +11,3 @@ export class EventLog {
     Object.assign( this, log )
   }
 }
-
-export namespace LogStatuses {
-  export const open = 0;
-  export const close = 1;
-  export const reverted = 2;
-}
