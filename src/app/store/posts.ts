@@ -1,19 +1,29 @@
 import { PostsState, RootState } from '~/types';
 import { ActionTree, GetterTree, MutationTree } from 'vuex';
-import { Post } from '~/types/post';
+import { Post, PostsApiResponse } from '~/types/post';
 
 export const state = (): PostsState => ({
   posts:    [] = [],
   page:     1,
-  per_page: 9
+  per_page: 9,
+  total: 0
 });
 
 export const getters: GetterTree<PostsState, RootState> = {
   getPosts( state: PostsState ): Post[] {
-    return state.posts.slice(
-      ( state.page - 1 ) * state.per_page, state.per_page
-    );
-  }
+    return state.posts;
+  },
+  getCurrentPage( state: PostsState ): number {
+    return state.page;
+  },
+  getTotalPages( state: PostsState ): number[] {
+    if (!state.total) {
+      return [1];
+    }
+    return Array(
+      Math.floor(state.total / state.per_page) + ( !(state.total % state.per_page) ? 0 : 1 )
+    ).fill(1).map( (_, index) => index + 1 );
+  },
 };
 
 export const mutations: MutationTree<PostsState> = {
@@ -22,17 +32,23 @@ export const mutations: MutationTree<PostsState> = {
     posts.forEach( post => {
       state.posts.push( post );
     } );
+  },
+  updatePaginateState( state: PostsState, { page, total } ) {
+    state.page = page;
+    state.total = total;
   }
 };
 
 export const actions: ActionTree<PostsState, RootState> = {
-  async fetchPosts( { commit } ) {
-    // TODO: ページごとに取得する
-    const result = await this.$axios.$get( '/api/posts.json' );
+  async fetchPosts( { commit }, { next_page } ) {
 
-    commit(
-      'setPosts',
-      result.map( _ => new Post( _ ) )
-    );
+    // TODO: ページごとに取得する
+    const result: PostsApiResponse = await this.$axios.$get( '/api/posts.json' );
+
+    commit( 'setPosts', result.posts.map( _ => new Post( _ ) ) );
+    commit( 'updatePaginateState', {
+      page: next_page,
+      total: result.total
+    });
   }
 };

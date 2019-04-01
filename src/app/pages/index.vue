@@ -72,29 +72,47 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <el-button type="primary">テスト</el-button>
-    <a class="button is-primary">Primary</a>
-    <h1 class="header">Nuxt TypeScript Starter</h1>
-    <div class="cards">
-    </div>
+      <nav class="pagination" role="navigation" aria-label="pagination">
+        <a class="pagination-previous"
+           @click="paginate(getCurrentPage - 1)"
+           title="This is the first page"
+           :disabled="getCurrentPage === 1">
+          前へ
+        </a>
+        <a class="pagination-next"
+           @click="paginate(getCurrentPage + 1)"
+           :disabled="getCurrentPage === getTotalPages.length">
+          次へ
+        </a>
+        <ul class="pagination-list">
+          <li>
+            <a v-for="page_number of getTotalPages"
+               @click="paginate(page_number)"
+               class="pagination-link" :class="{ 'is-current': getCurrentPage === page_number }"
+               :aria-label="'Page ' + page_number"
+               aria-current="page">
+              {{ page_number }}
+            </a>
+          </li>
+        </ul>
+        <span class="current-total"> {{ getCurrentPage }} / {{ getTotalPages.length }} ページ</span>
+      </nav>
+    </section>
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from "nuxt-property-decorator";
   import { Action, Getter } from "vuex-class";
-  import { PostStatuses } from '~/types/types';
+  import { PostStatuses } from "~/types/types";
 
   @Component( {
     async mounted() {
       await Promise.all( [
         this.fetchEventLogs(),
-        this.fetchPosts()
+        this.fetchPosts( { next_page: 1 } )
       ] );
-      console.log( this.getEventLogs );
-      console.log( this.getPosts );
     },
     async asyncData( { store } ) {
       return {
@@ -102,12 +120,28 @@
       };
       // await store.dispatch('event-logs/fetchEventLogs');
     },
-    components: {},
+    methods:    {
+      async paginate( next_page: number ) {
+        if (
+          next_page < 1 ||
+          next_page > this.getTotalPages ||
+          this.getCurrentPage === next_page
+        ) {
+          return;
+        }
+        await this.fetchPosts( { next_page } );
+      }
+    },
+    components: {}
   } )
   export default class extends Vue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
 
     @Getter( "getPosts", { namespace: "posts" } ) getPosts;
+
+    @Getter( "getCurrentPage", { namespace: "posts" } ) getCurrentPage;
+
+    @Getter( "getTotalPages", { namespace: "posts" } ) getTotalPages;
 
     @Action( "fetchEventLogs", { namespace: "event-logs" } ) fetchEventLogs;
 
@@ -182,6 +216,17 @@
           }
         }
       }
+    }
+  }
+
+  .pagination {
+    .pagination-list {
+      flex-grow: 0;
+    }
+    .current-total {
+      flex-grow: 1;
+      flex-shrink: 1;
+      order: 1;
     }
   }
 </style>

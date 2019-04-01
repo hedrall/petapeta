@@ -1,6 +1,13 @@
 import { Collaborator } from '~/types/collaborator';
 import { PostState } from '~/types/types';
 
+export class PostsApiResponse {
+  posts: Post[];
+  total: number;
+  page: number;
+  per_page: number;
+}
+
 // 拡散依頼の投稿
 export class Post {
   // 拡散してほしいURL

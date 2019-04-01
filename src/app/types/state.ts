@@ -13,5 +13,6 @@ export interface EventLogsState {
 export interface PostsState {
   posts: Post[],
   per_page: number,
-  page: number
+  page: number,
+  total: number
 }
