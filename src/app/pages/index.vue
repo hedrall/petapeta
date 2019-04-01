@@ -135,6 +135,11 @@
     min-height: 100%;
 
     .card-content {
+
+      &:hover {
+        background: $hover-background;
+      }
+
       .media {
         .media-content {
           width: 100%;
