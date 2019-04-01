@@ -43,7 +43,7 @@
                 <div class="media-content">
                   <div class="status has-text-right">
                     <span class="tag is-info is-right" v-if="post.status === PostStatuses.open">募集中</span>
-                    <span class="tag is-light" v-if="post.status === PostStatuses.close">終了</span>
+                    <span class="tag is-light" v-else-if="post.status === PostStatuses.close">終了</span>
                   </div>
                   <a :href="post.url" class="title is-6">{{ post.url }}</a>
                   <p class="subtitle is-7">{{ post.public_address }}</p>
@@ -56,7 +56,17 @@
                 </div>
                 <!--<a href="#">#css</a> <a href="#">#responsive</a>-->
                 <!--<br>-->
-                <time :datetime="2016-1-1">{{ post.deadline }}</time>
+                <div class="time-deposit">
+                  <img class="image is-24x24"
+                       src="@/assets/imgs/icons8-ethereum.svg"
+                       alt="ethereum icon">
+                  {{ post.deposit }} ETH
+                  <time :datetime="2016-1-1" class="has-text-grey is-size-7">
+                    <span v-if="post.status === PostStatuses.open">期限</span>
+                    <span v-else-if="post.status === PostStatuses.close">終了日</span>
+                    {{ post.deadline }}
+                  </time>
+                </div>
               </div>
             </div>
           </div>
@@ -153,9 +163,18 @@
           overflow: hidden;
         }
 
-        time {
-          margin-top: 7px;
-          display: block;
+        .time-deposit {
+          margin-top: 10px;
+
+          img {
+            display: inline;
+            vertical-align: bottom;
+          }
+
+          time {
+            float: right;
+            margin-top: 4px;
+          }
         }
       }
     }
