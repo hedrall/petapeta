@@ -24,7 +24,7 @@ export const mutations: MutationTree<EventLogsState> = {
 export const actions: ActionTree<EventLogsState, RootState> = {
   async fetchEventLogs({commit}) {
 
-    const result = await this.$axios.$get("./latest-event-logs.json")
+    const result = await this.$axios.$get("/api/latest-event-logs.json")
 
 
 
