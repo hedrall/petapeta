@@ -31,6 +31,12 @@ export class Post {
   // 拡散協力者
   collaborators: Collaborator[];
 
+  // 投稿作成時間
+  created_at: string;
+
+  // 最終更新時刻
+  updated_at: string;
+
   constructor( post: Partial<Post> ) {
     Object.assign( this, post );
   }
