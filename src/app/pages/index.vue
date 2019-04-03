@@ -107,33 +107,7 @@
   import { Action, Getter } from "vuex-class";
   import { PostStatuses } from "~/types/types";
 
-  @Component( {
-    async mounted() {
-      await Promise.all( [
-        this.fetchEventLogs(),
-        this.fetchPosts( { next_page: 1 } )
-      ] );
-    },
-    async asyncData( { store } ) {
-      return {
-        PostStatuses
-      };
-      // await store.dispatch('event-logs/fetchEventLogs');
-    },
-    methods:    {
-      async paginate( next_page: number ) {
-        if (
-          next_page < 1 ||
-          next_page > this.getTotalPages ||
-          this.getCurrentPage === next_page
-        ) {
-          return;
-        }
-        await this.fetchPosts( { next_page } );
-      }
-    },
-    components: {}
-  } )
+  @Component
   export default class extends Vue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
 
@@ -146,6 +120,37 @@
     @Action( "fetchEventLogs", { namespace: "event-logs" } ) fetchEventLogs;
 
     @Action( "fetchPosts", { namespace: "posts" } ) fetchPosts;
+
+    components = {};
+
+    async mounted() {
+      await Promise.all( [
+        this.fetchEventLogs(),
+        this.fetchPosts( { next_page: 1 } )
+      ] );
+    };
+
+    async asyncData ( {} ) {
+      return {
+        PostStatuses
+      };
+      // await store.dispatch('event-logs/fetchEventLogs');
+    };
+
+    async paginate( next_page: number ) {
+      if (
+        next_page < 1 ||
+        next_page > this.getTotalPages ||
+        this.getCurrentPage === next_page
+      ) {
+        console.log( 'can not paginate' );
+        return;
+      }
+      console.log( next_page );
+      await this.fetchPosts( { next_page } );
+    }
+
+
   }
 </script>
 
