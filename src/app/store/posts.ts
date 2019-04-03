@@ -6,7 +6,8 @@ export const state = (): PostsState => ({
   posts:    [] = [],
   page:     1,
   per_page: 9,
-  total: 0
+  total: 0,
+  loading: false
 });
 
 export const getters: GetterTree<PostsState, RootState> = {
@@ -24,6 +25,9 @@ export const getters: GetterTree<PostsState, RootState> = {
       Math.floor(state.total / state.per_page) + ( !(state.total % state.per_page) ? 0 : 1 )
     ).fill(1).map( (_, index) => index + 1 );
   },
+  getLoading( state: PostsState ): boolean {
+    return state.loading;
+  }
 };
 
 export const mutations: MutationTree<PostsState> = {
@@ -36,11 +40,18 @@ export const mutations: MutationTree<PostsState> = {
   updatePaginateState( state: PostsState, { page, total } ) {
     state.page = page;
     state.total = total;
+  },
+  toggleLoading( state: PostsState ) {
+    state.loading = !state.loading;
   }
 };
 
 export const actions: ActionTree<PostsState, RootState> = {
   async fetchPosts( { commit }, { next_page } ) {
+    commit( 'toggleLoading' );
+    commit( 'setPosts', [] );
+
+    await new Promise( resolve => setTimeout(resolve, 300));
 
     // TODO: ページごとに取得する
     const result: PostsApiResponse = await this.$axios.$get( '/api/posts.json' );
@@ -50,5 +61,7 @@ export const actions: ActionTree<PostsState, RootState> = {
       page: next_page,
       total: result.total
     });
+
+    commit( 'toggleLoading' );
   }
 };

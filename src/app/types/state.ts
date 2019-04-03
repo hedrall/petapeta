@@ -14,5 +14,6 @@ export interface PostsState {
   posts: Post[],
   per_page: number,
   page: number,
-  total: number
+  total: number,
+  loading: boolean
 }

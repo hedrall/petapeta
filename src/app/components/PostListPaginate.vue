@@ -3,13 +3,11 @@
     <nav class="pagination" role="navigation" aria-label="pagination">
       <a class="pagination-previous"
          @click="paginate(getCurrentPage - 1)"
-         title="This is the first page"
-         :disabled="getCurrentPage === 1">
+         title="This is the first page">
         前へ
       </a>
       <a class="pagination-next"
-         @click="paginate(getCurrentPage + 1)"
-         :disabled="getCurrentPage === getTotalPages.length">
+         @click="paginate(getCurrentPage + 1)">
         次へ
       </a>
       <ul class="pagination-list">
@@ -43,7 +41,7 @@
     async paginate( next_page: number ) {
       if (
         next_page < 1 ||
-        next_page > this.getTotalPages ||
+        next_page > this.getTotalPages.length ||
         this.getCurrentPage === next_page
       ) {
         console.log( 'can not paginate' );
