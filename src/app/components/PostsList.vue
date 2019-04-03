@@ -73,7 +73,6 @@
       return {
         PostStatuses
       };
-      // await store.dispatch('event-logs/fetchEventLogs');
     };
   }
 </script>
