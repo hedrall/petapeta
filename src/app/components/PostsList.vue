@@ -11,7 +11,7 @@
       </progress>
 
       <div class="column is-4" v-for="post of getPosts">
-        <div class="card">
+        <div class="card" @click="routing(post.id)">
 
           <div class="card-content">
             <div class="media">
@@ -61,6 +61,8 @@
     components: { PostListPaginate }
   } )
   export default class extends Vue {
+    $router;
+
     @Getter( "getPosts", { namespace: "posts" } ) getPosts;
 
     @Getter( "getLoading", { namespace: "posts" } ) postsLoading;
@@ -74,6 +76,12 @@
         PostStatuses
       };
     };
+
+    routing( id ) {
+      console.log(id);
+      console.log(this);
+      this.$router.push( '' + id);
+    }
   }
 </script>
 

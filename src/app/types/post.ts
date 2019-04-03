@@ -8,8 +8,14 @@ export class PostsApiResponse {
   per_page: number;
 }
 
+export class PostApiResponse {
+  post: Post;
+}
+
 // 拡散依頼の投稿
 export class Post {
+  id: number;
+
   // 拡散してほしいURL
   url: string;
 
