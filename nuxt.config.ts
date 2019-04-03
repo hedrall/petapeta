@@ -17,7 +17,6 @@ const config: NuxtConfiguration = {
   loading: { color: "#3B8070" },
   css: [
     // "~/assets/css/main.css",
-    'element-ui/lib/theme-chalk/index.css',
     // node.js module but we specify the pre-processor
     { src: '~assets/scss/main.scss', lang: 'scss' },
     '@fortawesome/fontawesome-free-webfonts',
@@ -34,9 +33,7 @@ const config: NuxtConfiguration = {
     "@nuxtjs/axios",
     '@nuxtjs/style-resources'
   ],
-  plugins: [
-    '~plugins/element-ui'
-  ],
+  plugins: [],
   axios: {}
 };
 

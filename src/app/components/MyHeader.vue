@@ -4,9 +4,6 @@
       <img src="~/assets/imgs/petapeta_logo.png">
     </div>
     <div class="login column is-4">
-      <el-button type="primary">
-        ログイン
-      </el-button>
     </div>
   </div>
 </template>
