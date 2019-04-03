@@ -24,22 +24,14 @@
     <section class="section">
       <span class="tag is-primary is-medium">投稿一覧</span>
 
+      <post-list-paginate />
+
       <div class="post-container columns is-multiline">
         <div class="column is-4" v-for="post of getPosts">
           <div class="card">
-            <!--<div class="card-image">-->
-            <!--<figure class="image is-4by3">-->
-            <!--<img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">-->
-            <!--</figure>-->
-            <!--</div>-->
 
             <div class="card-content">
               <div class="media">
-                <!--<div class="media-left">-->
-                <!--<figure class="image is-48x48">-->
-                <!--<img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">-->
-                <!--</figure>-->
-                <!--</div>-->
                 <div class="media-content">
                   <div class="status has-text-right">
                     <span class="tag is-info is-right" v-if="post.status === PostStatuses.open">募集中</span>
@@ -54,8 +46,6 @@
                 <div class="post-message">
                   {{ post.message }}
                 </div>
-                <!--<a href="#">#css</a> <a href="#">#responsive</a>-->
-                <!--<br>-->
                 <div class="time-deposit">
                   <img class="image is-24x24"
                        src="@/assets/imgs/icons8-ethereum.svg"
@@ -73,31 +63,8 @@
         </div>
       </div>
 
-      <nav class="pagination" role="navigation" aria-label="pagination">
-        <a class="pagination-previous"
-           @click="paginate(getCurrentPage - 1)"
-           title="This is the first page"
-           :disabled="getCurrentPage === 1">
-          前へ
-        </a>
-        <a class="pagination-next"
-           @click="paginate(getCurrentPage + 1)"
-           :disabled="getCurrentPage === getTotalPages.length">
-          次へ
-        </a>
-        <ul class="pagination-list">
-          <li>
-            <a v-for="page_number of getTotalPages"
-               @click="paginate(page_number)"
-               class="pagination-link" :class="{ 'is-current': getCurrentPage === page_number }"
-               :aria-label="'Page ' + page_number"
-               aria-current="page">
-              {{ page_number }}
-            </a>
-          </li>
-        </ul>
-        <span class="current-total"> {{ getCurrentPage }} / {{ getTotalPages.length }} ページ</span>
-      </nav>
+      <post-list-paginate />
+
     </section>
   </div>
 </template>
@@ -106,8 +73,10 @@
   import { Component, Vue } from "nuxt-property-decorator";
   import { Action, Getter } from "vuex-class";
   import { PostStatuses } from "~/types/types";
-
-  @Component
+  import PostListPaginate from '~/components/PostListPaginate.vue';
+  @Component( {
+    components: { PostListPaginate }
+  } )
   export default class extends Vue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
 
@@ -121,7 +90,9 @@
 
     @Action( "fetchPosts", { namespace: "posts" } ) fetchPosts;
 
-    components = {};
+    components = {
+      PostListPaginate
+    };
 
     async mounted() {
       await Promise.all( [
