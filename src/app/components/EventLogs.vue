@@ -1,21 +1,25 @@
 <template>
   <div>
+    <v-card class="card"
+            v-if="getEventLogs && getEventLogs.length > 0" height="200">
+      <v-list one-line>
+        <v-list-tile v-for="log of getEventLogs" class="tile">
+          <v-list-tile-content>
 
-    <!-- イベントログ -->
-    <div class="table-wrapper">
-      <table class="table is-fullwidth is-hoverable is-narrow">
-        <tbody>
-        <tr v-for="log in getEventLogs">
-          <td v-if="log.state === PostStatuses.open">
-            {{log.url}}の期限が終了し、デポジット {{ log.deposit }}ETH が分配されました。
-          </td>
-          <td v-else-if="log.state === PostStatuses.close">
-            {{log.url}}の拡散協力依頼が開始しました。( デポジット: {{ log.deposit }} ETH )
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+            <!--<v-list-tile-title>{{ log.url }}</v-list-tile-title>-->
+
+            <v-list-tile-title v-if="log.state === PostStatuses.open">
+              {{ log.url }}の期限が終了し、デポジット {{ log.deposit }}ETH が分配されました。
+            </v-list-tile-title>
+
+            <v-list-tile-title v-else-if="log.state === PostStatuses.close">
+              {{ log.url }}の拡散協力依頼が開始しました。( デポジット: {{ log.deposit }} ETH )
+            </v-list-tile-title>
+
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-card>
 
   </div>
 </template>
@@ -46,4 +50,21 @@
     border-radius: 5px;
   }
 
+  .card {
+    overflow: scroll;
+
+    .tile {
+
+      &:hover {
+        background: $hover-background;
+      }
+    }
+  }
+
+</style>
+
+<style lang="scss">
+  .v-list__tile {
+    height: 35px;
+  }
 </style>

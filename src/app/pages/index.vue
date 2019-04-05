@@ -3,7 +3,7 @@
 
     <!-- イベントログ -->
     <section class="section">
-      <span class="tag is-primary is-medium section-title">イベントログ</span>
+      <v-chip class="mb-3" color="primary" text-color="white">イベントログ</v-chip>
 
       <event-logs />
     </section>
