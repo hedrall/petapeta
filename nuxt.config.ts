@@ -1,4 +1,5 @@
 import NuxtConfiguration from '@nuxt/config'
+import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin';
 
 const config: NuxtConfiguration = {
   srcDir: 'src/app',
@@ -28,12 +29,19 @@ const config: NuxtConfiguration = {
     // your settings here
     sass: ['~/assets/scss/main.scss']
   },
-  build: {},
+  build: {
+    plugins:   [
+      new VuetifyLoaderPlugin()
+    ],
+    transpile: [ /^vuetify/ ],
+  },
   modules: [
     "@nuxtjs/axios",
     '@nuxtjs/style-resources'
   ],
-  plugins: [],
+  plugins: [
+    "@/plugins/vuetify.js"
+  ],
   axios: {}
 };
 
