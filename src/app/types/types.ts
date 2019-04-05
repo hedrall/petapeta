@@ -10,5 +10,6 @@ export namespace PostStatuses {
 
 export class MyVue extends Vue {
   $axios;
+  $moment;
   $router;
 }

@@ -9,11 +9,27 @@
             <!--<v-list-tile-title>{{ log.url }}</v-list-tile-title>-->
 
             <v-list-tile-title v-if="log.state === PostStatuses.open">
-              {{ log.url }}の期限が終了し、デポジット {{ log.deposit }}ETH が分配されました。
+              {{ date(log.created_at) }} :
+              <strong class="indigo--text text--darken-2">
+                {{ log.url }}
+              </strong>
+              の期限が終了し、デポジット
+              <strong class="indigo--text text--darken-2">
+                {{ log.deposit }}ETH
+              </strong>
+              が分配されました。
             </v-list-tile-title>
 
             <v-list-tile-title v-else-if="log.state === PostStatuses.close">
-              {{ log.url }}の拡散協力依頼が開始しました。( デポジット: {{ log.deposit }} ETH )
+              {{ date(log.created_at) }} :
+              <strong class="indigo--text text--darken-2">
+                {{ log.url }}
+              </strong>
+              の拡散協力依頼が開始しました。( デポジット:
+              <strong class="indigo--text text--darken-2">
+                {{ log.deposit }} ETH
+              </strong>
+              )
             </v-list-tile-title>
 
           </v-list-tile-content>
@@ -25,19 +41,23 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "nuxt-property-decorator";
+  import { Component } from "nuxt-property-decorator";
   import { Getter } from "vuex-class";
-  import { PostStatuses } from "~/types/types";
+  import { MyVue, PostStatuses } from "~/types/types";
 
   @Component( {} )
-  export default class extends Vue {
+  export default class extends MyVue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
 
-    data ( {} ) {
+    data( {} ) {
       return {
         PostStatuses
       };
     };
+
+    date = function ( date ) {
+      return this.$moment( date ).format( "YYYY/MM/DD HH:mm" );
+    }
   }
 </script>
 

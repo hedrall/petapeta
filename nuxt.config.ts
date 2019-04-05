@@ -37,7 +37,8 @@ const config: NuxtConfiguration = {
   },
   modules: [
     "@nuxtjs/axios",
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+      ['@nuxtjs/moment', ['ja']]
   ],
   plugins: [
     "@/plugins/vuetify.js"

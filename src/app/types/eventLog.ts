@@ -5,7 +5,7 @@ export class EventLog {
   state: PostState;
   deposit: number;
   deadline: string;
-  last_updated: string;
+  created_at: string;
 
   constructor( log: Partial<EventLog> ) {
     Object.assign( this, log )

@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div row wrap>
 
     <!-- イベントログ -->
-    <section class="section">
+    <section class="xs12 mb-5 section">
       <v-chip class="mb-3" color="primary" text-color="white">イベントログ</v-chip>
 
       <event-logs />
     </section>
 
     <!-- 投稿一覧 -->
-    <section class="section">
+    <section class="section xs12">
 
-      <span class="tag is-primary is-medium section-title">投稿一覧</span>
+      <v-chip class="mb-3" color="primary" text-color="white">投稿一覧</v-chip>
 
       <posts-list />
 

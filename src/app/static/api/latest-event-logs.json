@@ -4,69 +4,69 @@
     "state": 0,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url2.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url3.com",
     "state": 0,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url4.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url5.com",
     "state": 0,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url6.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url7.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url8.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url9.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   },
   {
     "url": "https://url10.com",
     "state": 1,
     "deposit": 0.15,
     "deadline": "2019-04-01 00:00",
-    "last_updated": "2019-04-01 00:00"
+    "created_at": "2019-04-01 00:00"
   }
 ]

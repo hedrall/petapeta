@@ -1,9 +1,8 @@
 <template>
   <v-app>
-    <!--<v-navigation-drawer app></v-navigation-drawer>-->
     <my-header/>
     <v-content class="default-layout">
-      <v-container fluid>
+      <v-container>
         <nuxt/>
       </v-container>
     </v-content>
@@ -32,6 +31,7 @@
     }
 
     .default-layout {
+      padding-top: 20px !important;
       min-height: calc(100vh - 60px - 230px - 0.75rem);
     }
   }
