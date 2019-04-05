@@ -54,7 +54,7 @@ export const actions: ActionTree<PostsState, RootState> = {
     await new Promise( resolve => setTimeout(resolve, 300));
 
     // TODO: ページごとに取得する
-    const result: PostsApiResponse = await this.$axios.$get( '/api/posts.json' );
+    const result: PostsApiResponse = await (this as any).$axios.$get( '/api/posts.json' );
 
     commit( 'setPosts', result.posts.map( _ => new Post( _ ) ) );
     commit( 'updatePaginateState', {

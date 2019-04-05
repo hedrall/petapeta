@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "nuxt-property-decorator";
+  import { Component } from "nuxt-property-decorator";
   import { Action, Getter } from "vuex-class";
-  import { PostStatuses } from "~/types/types";
+  import { MyVue, PostStatuses } from "~/types/types";
   import EventLogs from '~/components/EventLogs.vue';
   import PostsList from '~/components/PostsList.vue';
   import PostListPaginate from '~/components/PostListPaginate.vue';
@@ -30,7 +30,7 @@
   @Component( {
     components: { EventLogs, PostsList, PostListPaginate }
   } )
-  export default class extends Vue {
+  export default class extends MyVue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
 
     @Getter( "getPosts", { namespace: "posts" } ) getPosts;

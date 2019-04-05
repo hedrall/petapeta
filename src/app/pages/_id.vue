@@ -15,18 +15,17 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "nuxt-property-decorator";
+  import { Component } from "nuxt-property-decorator";
+
   import { Post, PostApiResponse } from "../types/post";
+  import { MyVue } from '~/types/types';
 
   @Component( {} )
-  export default class extends Vue {
-    $router;
+  export default class extends MyVue {
     post_id: number;
     post: Post = new Post({});
 
     components = {};
-
-    private context;
 
     async asyncData ({params}) {
       // await app.getPost();
