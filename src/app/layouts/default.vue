@@ -1,18 +1,14 @@
 <template>
-  <div class="default-layout">
-    <my-header />
-    <v-app>
-      <v-btn color="success">Success</v-btn>
-      <v-btn color="error">Error</v-btn>
-      <v-btn color="warning">Warning</v-btn>
-      <v-btn color="info">Info</v-btn>
-    </v-app>
-    <v-btn color="success">Success</v-btn>
-    <div class="container default-layout">
-      <nuxt/>
-    </div>
-    <my-footer />
-  </div>
+  <v-app>
+    <!--<v-navigation-drawer app></v-navigation-drawer>-->
+    <my-header/>
+    <v-content class="default-layout">
+      <v-container fluid>
+        <nuxt/>
+      </v-container>
+    </v-content>
+    <my-footer/>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -31,9 +27,14 @@
 
 <style lang="scss">
   html {
+    body {
+      margin: 0;
+    }
+
     .default-layout {
       min-height: calc(100vh - 60px - 230px - 0.75rem);
     }
   }
+
 
 </style>

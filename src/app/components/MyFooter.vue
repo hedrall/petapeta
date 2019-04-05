@@ -1,48 +1,50 @@
 <template>
-  <footer class="footer">
-    <div class="container">
-      <div class="content has-text-centered">
-        <div class="soc">
-          <a href="#"><i class="fab fa-github-alt fa-2x" aria-hidden="true"></i></a>
-          <a href="#"><i class="fab fa-youtube fa-2x" aria-hidden="true"></i></a>
-          <a href="#"><i class="fab fa-facebook fa-2x" aria-hidden="true"></i></a>
-          <a href="#"><i class="fab fa-twitter fa-2x" aria-hidden="true"></i></a>
-        </div>
-        <p>
-          <strong>PetaPeta</strong> by <a href="http://www.asahi.com">Asahi Shimbun</a>.
-                                    The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">Us</a>. <br>
-        </p>
-      </div>
-    </div>
-  </footer>
+  <v-footer dark height="auto">
+    <v-card flat tile class="grey darken-4 white--text text-xs-center">
+      <v-card-text>
+        <v-btn
+            v-for="icon in icons"
+            :key="icon"
+            class="mx-3 white--text"
+            icon
+        >
+          <v-icon size="24px">{{ icon }}</v-icon>
+        </v-btn>
+      </v-card-text>
+
+      <v-card-text class="white--text pt-0">
+        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-text class="white--text">
+        &copy;2019 — <strong>ABCC</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from "nuxt-property-decorator"
 
   @Component({})
-  export default class extends Vue {}
+  export default class extends Vue {
+
+    data() {
+      return {
+        icons: [
+          'fab fa-facebook',
+          'fab fa-twitter',
+          'fab fa-google-plus',
+          'fab fa-linkedin',
+          'fab fa-instagram'
+        ]
+      }
+    }
+  }
 </script>
 
 
 <style scoped lang="scss">
-  p,
-  i,
-  strong {
-    color: white;
-  }
-  a {
-    color: $main-theme;
-  }
-  i {
-    margin: 10px;
-  }
-  .columns {
-    margin-top: 0;
-  }
-  .footer {
-    background: #222831;
-    padding: 45px 0 0 0;
-    height: 230px;
-  }
 </style>

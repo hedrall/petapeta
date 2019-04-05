@@ -1,11 +1,11 @@
 <template>
-  <div class="header columns">
+  <v-toolbar app class="header columns primary">
     <div class="logo column is-8">
       <img src="~/assets/imgs/petapeta_logo.png">
     </div>
     <div class="login column is-4">
     </div>
-  </div>
+  </v-toolbar>
 </template>
 
 <script lang="ts">
