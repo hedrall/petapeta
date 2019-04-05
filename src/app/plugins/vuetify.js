@@ -5,7 +5,7 @@ import 'vuetify/src/stylus/main.styl'
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.lightBlue.lighten1,
+    primary: colors.indigo.darken2,
   }
 });
 
