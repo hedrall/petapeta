@@ -13,3 +13,5 @@ export class MyVue extends Vue {
   $moment;
   $router;
 }
+
+export type SNS = 'twitter';

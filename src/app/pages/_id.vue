@@ -1,17 +1,40 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 class="mb-3">
-      <span class="indigo--text darken-2 subheading" @click="back">< back</span>
+      <span class="back-button indigo--text darken-2 subheading px-3 py-2"
+            style="border-radius: 5px"
+            @click="back">< back</span>
     </v-flex>
 
     <v-flex xs12 v-if="post" >
       <v-layout row wrap>
         <v-flex xs12>
-          <h1 class="headline indigo--text text--darken-2">
-            <a :href="post.url" style="text-decoration: none">{{ post.url }}</a>
-          </h1>
+          <v-card>
+            <v-card-text>
+              <h1 class="headline indigo--text text--darken-2">
+                <a :href="post.url" style="text-decoration: none">{{ post.url }}</a>
+              </h1>
 
-          <p class="body-1 grey--text text--darken-3">{{ post.public_address }} さん</p>
+              <p class="body-1 grey--text text--darken-3">{{ post.public_address }} さん</p>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs12>
+          <v-card>
+            <v-card-title class="pb-0">
+              <v-chip color="primary" text-color="white">
+                協力者のみなさまへのメッセージ
+              </v-chip>
+            </v-card-title>
+
+            <v-card-text>
+              <p class="subheading grey--text text--darken-2 mb-0">
+                {{ post.message }}
+              </p>
+            </v-card-text>
+          </v-card>
+
         </v-flex>
 
         <v-flex md6>
@@ -51,7 +74,7 @@
           </v-card>
         </v-flex>
 
-        <v-flex md12>
+        <v-flex xs12>
           <v-card height="100%">
             <v-card-title class="pb-0 justify-space-between">
               <v-chip color="primary" text-color="white">
@@ -61,6 +84,39 @@
             </v-card-title>
 
             <v-card-text>
+              <v-timeline
+                  :dense="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+              >
+                <v-timeline-item
+                    v-for="collaborator in post.collaborators"
+                    color="indigo lighten-1"
+                    large
+                >
+                  <template v-slot:opposite>
+                    <span>{{ date(collaborator.created_at) }}</span>
+                  </template>
+                  <v-card class="elevation-2">
+                    <v-card-title class="headline pb-0">
+                      {{ collaborator.account_name }} さん
+                    </v-card-title>
+                    <v-card-text class="pt-2">
+                      {{ collaborator.content }}
+                      <div v-if="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+                           class="grey--text text--darken-2 text-xs-right"
+                      >
+                        {{ collaborator.created_at }}
+                      </div>
+                      <div style="overflow: hidden;">
+
+                        <a :href="collaborator.diffusion_url"
+                        style="text-decoration: none;">
+                          URL:{{ collaborator.diffusion_url }}
+                        </a>
+                      </div>
+                    </v-card-text>
+                  </v-card>
+                </v-timeline-item>
+              </v-timeline>
 
             </v-card-text>
           </v-card>
@@ -68,8 +124,6 @@
       </v-layout>
     </v-flex>
 
-
-    <h1>{{ post_id }}</h1>
   </v-layout>
 </template>
 
@@ -101,9 +155,12 @@
       this.getPost();
     };
 
+    // 投稿を取得する
     async getPost() {
       const result: PostApiResponse = await this.$axios.$get( "/api/post/id.json" );
       this.post                     = new Post( result.post );
+      console.log('投稿を取得');
+      console.log(this.post);
     }
 
     date = function ( date: string ): string {
@@ -126,5 +183,12 @@
 </script>
 
 <style scoped lang="scss">
+  .back-button {
+    cursor: pointer;
+
+    &:hover {
+      background: $hover-background;
+    }
+  }
 
 </style>

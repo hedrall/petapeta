@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="indigo lighten-3">
     <my-header style="z-index: 100"/>
     <v-content class="default-layout">
       <v-container grid-list-md>

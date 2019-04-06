@@ -3,8 +3,11 @@ import { PostState } from '~/types/types';
 
 export class PostsApiResponse {
   posts: Post[];
+
   total: number;
+
   page: number;
+
   per_page: number;
 }
 
@@ -38,7 +41,7 @@ export class Post {
   public_address: string;
 
   // 拡散協力者
-  collaborators: Collaborator[];
+  collaborators: Collaborator[] = [];
 
   // 投稿作成時間
   created_at: string;
@@ -48,5 +51,10 @@ export class Post {
 
   constructor( post: Partial<Post> ) {
     Object.assign( this, post );
+
+    if ( post.collaborators ) {
+      this.collaborators = post.collaborators.map( _ => new Collaborator( _ ) );
+    }
+
   }
 }
