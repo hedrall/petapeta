@@ -1,2 +1,9 @@
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
-//import 'material-design-icons-iconfont/src/material-design-icons.scss';
+import '@fortawesome/fontawesome-free/css/all.css';
+
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify, {
+  iconfont: 'md' || 'fa'
+});

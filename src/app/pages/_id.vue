@@ -96,8 +96,9 @@
                     <span>{{ date(collaborator.created_at) }}</span>
                   </template>
                   <v-card class="elevation-2">
-                    <v-card-title class="headline pb-0">
+                    <v-card-title class="headline pb-0 justify-space-between">
                       {{ collaborator.account_name }} さん
+                      <v-icon color="primary">fab fa-twitter</v-icon>
                     </v-card-title>
                     <v-card-text class="pt-2">
                       {{ collaborator.content }}

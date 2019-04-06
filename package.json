@@ -4,6 +4,7 @@
   "version": "2.4.5",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@nuxtjs/axios": "5.4.1",
     "@nuxtjs/moment": "^1.2.0",
