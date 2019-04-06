@@ -1,50 +1,69 @@
 <template>
   <div>
+
     <post-list-paginate/>
 
-    <div class="post-container columns is-multiline">
+    <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
 
-      <progress class="progress is-small is-primary"
-                max="100"
-                v-if="postsLoading"
-      >15%
-      </progress>
+        <v-progress-circular
+            :size="50"
+            color="primary"
+            indeterminate
+            v-if="postsLoading"
+        ></v-progress-circular>
 
-      <div class="column is-4" v-for="post of getPosts">
-        <div class="card" @click="routing(post.id)">
-
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <div class="status has-text-right">
-                  <span class="tag is-info is-right" v-if="post.status === PostStatuses.open">募集中</span>
-                  <span class="tag is-light" v-else-if="post.status === PostStatuses.close">終了</span>
+        <v-flex class="column" v-for="post of getPosts" xs12 sm6 md4 lg3>
+          <v-hover>
+            <v-card :class="`elevation-${hover ? 12 : 2}`"
+                    slot-scope="{ hover }"
+                    @click="routing($event, post.id)">
+              <v-card-title primary-title class="pb-1">
+                <div class="title">
+                  <a class="subheading indigo--text text--darken-2 text-xs-left"
+                     style="display: block; text-decoration: none"
+                     :href="post.url"
+                     target="_blank"
+                  >
+                    {{ post.url }}
+                  </a>
                 </div>
-                <a :href="post.url" class="title is-6">{{ post.url }}</a>
-                <p class="subtitle is-7">{{ post.public_address }}</p>
-              </div>
-            </div>
+              </v-card-title>
 
-            <div class="content">
-              <div class="post-message">
-                {{ post.message }}
-              </div>
-              <div class="time-deposit">
-                <img class="image is-24x24"
-                     src="@/assets/imgs/icons8-ethereum.svg"
-                     alt="ethereum icon">
-                {{ post.deposit }} ETH
-                <time :datetime="2016-1-1" class="has-text-grey is-size-7">
-                  <span v-if="post.status === PostStatuses.open">期限</span>
-                  <span v-else-if="post.status === PostStatuses.close">終了日</span>
-                  {{ post.deadline }}
-                </time>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              <v-card-text class="message pt-0 pb-0 text-xs-left">
+                <span class="grey--text text--darken-2">{{ post.message }}</span>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-list-tile class="grow">
+
+                  <img class="image"
+                       height="30"
+                       src="@/assets/imgs/icons8-ethereum.svg"
+                       alt="ethereum icon">
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ post.deposit }}</v-list-tile-title>
+                  </v-list-tile-content>
+
+
+                  <div class="body-1 grey--text text--darken-1">
+                  <span v-if="post.status === PostStatuses.open">
+                    期限:
+                  </span>
+                    <span v-else-if="post.status === PostStatuses.close">
+                    終了:
+                  </span>
+                    {{ date(post.deadline ) }}
+                  </div>
+                </v-list-tile>
+              </v-card-actions>
+            </v-card>
+          </v-hover>
+
+        </v-flex>
+
+      </v-layout>
+    </v-container>
 
     <post-list-paginate/>
 
@@ -52,15 +71,15 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "nuxt-property-decorator";
+  import { Component } from "nuxt-property-decorator";
   import { Getter } from "vuex-class";
   import PostListPaginate from "~/components/PostListPaginate.vue";
-  import { PostStatuses } from '~/types/types';
+  import { MyVue, PostStatuses } from "~/types/types";
 
   @Component( {
     components: { PostListPaginate }
   } )
-  export default class extends Vue {
+  export default class extends MyVue {
     $router;
 
     @Getter( "getPosts", { namespace: "posts" } ) getPosts;
@@ -71,76 +90,41 @@
       PostListPaginate
     };
 
-    data () {
+    data() {
       return {
         PostStatuses
       };
     };
 
-    routing( id ) {
-      console.log(id);
-      console.log(this);
-      this.$router.push( '' + id);
+    date = function ( date ) {
+      return this.$moment( date ).format( "YYYY/MM/DD" );
+    };
+
+    routing( event, id ) {
+      if (event.target.tagName !== 'A' ) {
+        this.$router.push( "" + id );
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
-  .post-container {
-    margin-top: 0.75rem;
+  .title {
+    display: -webkit-box;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
 
-    .card {
-      min-height: 100%;
-
-      .card-content {
-
-        &:hover {
-          background: $hover-background;
-        }
-
-        .media {
-          .media-content {
-            width: 100%;
-
-            > .title, .subtitle {
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              width: 100%;
-              overflow: hidden;
-            }
-
-            > a {
-              display: block;
-              color: $main-theme;
-            }
-          }
-        }
-
-        .content {
-          .post-message {
-            display: -webkit-box;
-            /* autoprefixer: off */
-            -webkit-box-orient: vertical;
-            /* autoprefixer: on */
-            -webkit-line-clamp: 3;
-            overflow: hidden;
-          }
-
-          .time-deposit {
-            margin-top: 10px;
-
-            img {
-              display: inline;
-              vertical-align: bottom;
-            }
-
-            time {
-              float: right;
-              margin-top: 4px;
-            }
-          }
-        }
-      }
-    }
+  .message {
+    display: -webkit-box;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    height: 101px;
   }
 </style>

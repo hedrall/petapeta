@@ -1,5 +1,6 @@
 <template>
-  <v-footer dark height="auto">
+  <v-footer dark height="auto"
+  >
     <v-card flat tile class="grey darken-4 white--text text-xs-center">
       <v-card-text>
         <v-btn

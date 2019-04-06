@@ -51,7 +51,7 @@ export const actions: ActionTree<PostsState, RootState> = {
     commit( 'toggleLoading' );
     commit( 'setPosts', [] );
 
-    await new Promise( resolve => setTimeout(resolve, 300));
+    await new Promise( resolve => setTimeout(resolve, 500));
 
     // TODO: ページごとに取得する
     const result: PostsApiResponse = await (this as any).$axios.$get( '/api/posts.json' );
