@@ -50,6 +50,21 @@
             </v-card-text>
           </v-card>
         </v-flex>
+
+        <v-flex md12>
+          <v-card height="100%">
+            <v-card-title class="pb-0 justify-space-between">
+              <v-chip color="primary" text-color="white">
+                協力者
+              </v-chip>
+              <v-btn color="info">協力する</v-btn>
+            </v-card-title>
+
+            <v-card-text>
+
+            </v-card-text>
+          </v-card>
+        </v-flex>
       </v-layout>
     </v-flex>
 
