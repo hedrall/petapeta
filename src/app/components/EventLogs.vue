@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="event-logs">
     <v-card class="card"
             v-if="getEventLogs && getEventLogs.length > 0" height="200">
       <v-list one-line>
@@ -63,7 +63,7 @@
 
 <style scoped lang="scss">
 
-  .container {
+  .event-logs {
     min-height: 248px;
 
     .card {

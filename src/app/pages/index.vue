@@ -2,7 +2,7 @@
   <div row wrap>
 
     <!-- イベントログ -->
-    <section class="xs12 mb-5 section">
+    <section class="xs12 section">
       <v-chip class="mb-3" color="primary" text-color="white">イベントログ</v-chip>
 
       <event-logs />
