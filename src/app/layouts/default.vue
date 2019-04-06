@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <my-header/>
+    <my-header style="z-index: 100"/>
     <v-content class="default-layout">
       <v-container>
         <nuxt/>

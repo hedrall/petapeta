@@ -1,28 +1,10 @@
 <template>
-  <div>
-    <nav class="pagination" role="navigation" aria-label="pagination">
-      <a class="pagination-previous"
-         @click="paginate(getCurrentPage - 1)"
-         title="This is the first page">
-        前へ
-      </a>
-      <a class="pagination-next"
-         @click="paginate(getCurrentPage + 1)">
-        次へ
-      </a>
-      <ul class="pagination-list">
-        <li>
-          <a v-for="page_number of getTotalPages"
-             @click="paginate(page_number)"
-             class="pagination-link" :class="{ 'is-current': getCurrentPage === page_number }"
-             :aria-label="'Page ' + page_number"
-             aria-current="page">
-            {{ page_number }}
-          </a>
-        </li>
-      </ul>
-      <span class="current-total"> {{ getCurrentPage }} / {{ getTotalPages.length }} ページ</span>
-    </nav>
+  <div class="text-xs-center">
+    <v-pagination
+        v-model="page"
+        :length="getTotalPages.length"
+        :total-visible="7"
+    ></v-pagination>
   </div>
 </template>
 
@@ -37,6 +19,14 @@
     @Getter( "getTotalPages", { namespace: "posts" } ) getTotalPages;
 
     @Action( "fetchPosts", { namespace: "posts" } ) fetchPosts;
+
+    get page () {
+      return this.getCurrentPage;
+    }
+
+    set page ( value ) {
+      this.paginate( value );
+    }
 
     async paginate( next_page: number ) {
       if (

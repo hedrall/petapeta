@@ -6,12 +6,13 @@
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
 
-        <v-progress-circular
-            :size="50"
-            color="primary"
-            indeterminate
-            v-if="postsLoading"
-        ></v-progress-circular>
+        <v-flex v-if="postsLoading">
+          <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+          ></v-progress-circular>
+        </v-flex>
 
         <v-flex class="column" v-for="post of getPosts" xs12 sm6 md4 lg3>
           <v-hover>
@@ -101,7 +102,7 @@
     };
 
     routing( event, id ) {
-      if (event.target.tagName !== 'A' ) {
+      if ( event.target.tagName !== 'A' ) {
         this.$router.push( "" + id );
       }
     }

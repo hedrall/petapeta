@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <v-card class="card"
             v-if="getEventLogs && getEventLogs.length > 0" height="200">
       <v-list one-line>
@@ -63,20 +63,17 @@
 
 <style scoped lang="scss">
 
-  .table-wrapper {
-    height: 160px;
-    overflow: scroll;
-    border: solid 1px $natural-border;
-    border-radius: 5px;
-  }
+  .container {
+    min-height: 248px;
 
-  .card {
-    overflow: scroll;
+    .card {
+      overflow: scroll;
 
-    .tile {
+      .tile {
 
-      &:hover {
-        background: $hover-background;
+        &:hover {
+          background: $hover-background;
+        }
       }
     }
   }

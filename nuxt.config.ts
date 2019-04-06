@@ -20,14 +20,10 @@ const config: NuxtConfiguration = {
     // "~/assets/css/main.css",
     // node.js module but we specify the pre-processor
     { src: '~assets/scss/main.scss', lang: 'scss' },
-    '@fortawesome/fontawesome-free-webfonts',
-    '@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
-    '@fortawesome/fontawesome-free-webfonts/css/fa-regular.css',
-    '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
   ],
   styleResources: {
     // your settings here
-    sass: ['~/assets/scss/main.scss']
+    sass: ['~/assets/scss/main.scss'],
   },
   build: {
     plugins:   [
@@ -41,7 +37,8 @@ const config: NuxtConfiguration = {
       ['@nuxtjs/moment', ['ja']]
   ],
   plugins: [
-    "@/plugins/vuetify.js"
+    "@/plugins/vuetify.js",
+    "@/plugins/material-design-icons-iconfont.js"
   ],
   axios: {}
 };
