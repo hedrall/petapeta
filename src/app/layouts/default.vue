@@ -2,7 +2,7 @@
   <v-app>
     <my-header style="z-index: 100"/>
     <v-content class="default-layout">
-      <v-container>
+      <v-container grid-list-md>
         <nuxt/>
       </v-container>
     </v-content>

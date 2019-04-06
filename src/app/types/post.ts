@@ -25,6 +25,9 @@ export class Post {
   // デポジット ( ETH )
   deposit: number;
 
+  // デポジット登録済み
+  is_deposit: boolean;
+
   // 締め切り
   deadline: string;
 

@@ -3,68 +3,66 @@
 
     <post-list-paginate/>
 
-    <v-container grid-list-md text-xs-center>
-      <v-layout row wrap>
+    <v-layout row wrap text-xs-center>
 
-        <v-flex v-if="postsLoading">
-          <v-progress-circular
-              :size="50"
-              color="primary"
-              indeterminate
-          ></v-progress-circular>
-        </v-flex>
+      <v-flex v-if="postsLoading">
+        <v-progress-circular
+            :size="50"
+            color="primary"
+            indeterminate
+        ></v-progress-circular>
+      </v-flex>
 
-        <v-flex class="column" v-for="post of getPosts" xs12 sm6 md4 lg3>
-          <v-hover>
-            <v-card :class="`elevation-${hover ? 12 : 2}`"
-                    slot-scope="{ hover }"
-                    @click="routing($event, post.id)">
-              <v-card-title primary-title class="pb-1">
-                <div class="title">
-                  <a class="subheading indigo--text text--darken-2 text-xs-left"
-                     style="display: block; text-decoration: none"
-                     :href="post.url"
-                     target="_blank"
-                  >
-                    {{ post.url }}
-                  </a>
-                </div>
-              </v-card-title>
+      <v-flex class="column" v-for="post of getPosts" xs12 sm6 md4 lg3>
+        <v-hover>
+          <v-card :class="`elevation-${hover ? 12 : 2}`"
+                  slot-scope="{ hover }"
+                  @click="routing($event, post.id)">
+            <v-card-title primary-title class="pb-1">
+              <div class="title">
+                <a class="subheading indigo--text text--darken-2 text-xs-left"
+                   style="display: block; text-decoration: none"
+                   :href="post.url"
+                   target="_blank"
+                >
+                  {{ post.url }}
+                </a>
+              </div>
+            </v-card-title>
 
-              <v-card-text class="message pt-0 pb-0 text-xs-left">
-                <span class="grey--text text--darken-2">{{ post.message }}</span>
-              </v-card-text>
+            <v-card-text class="message pt-0 pb-0 text-xs-left">
+              <span class="grey--text text--darken-2">{{ post.message }}</span>
+            </v-card-text>
 
-              <v-card-actions>
-                <v-list-tile class="grow">
+            <v-card-actions>
+              <v-list-tile class="grow">
 
-                  <img class="image"
-                       height="30"
-                       src="@/assets/imgs/icons8-ethereum.svg"
-                       alt="ethereum icon">
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ post.deposit }}</v-list-tile-title>
-                  </v-list-tile-content>
+                <img class="image"
+                     height="30"
+                     src="@/assets/imgs/icons8-ethereum.svg"
+                     alt="ethereum icon">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ post.deposit }}</v-list-tile-title>
+                </v-list-tile-content>
 
 
-                  <div class="body-1 grey--text text--darken-1">
+                <div class="body-1 grey--text text--darken-1">
                   <span v-if="post.status === PostStatuses.open">
                     期限:
                   </span>
-                    <span v-else-if="post.status === PostStatuses.close">
+                  <span v-else-if="post.status === PostStatuses.close">
                     終了:
                   </span>
-                    {{ date(post.deadline ) }}
-                  </div>
-                </v-list-tile>
-              </v-card-actions>
-            </v-card>
-          </v-hover>
+                  {{ date(post.deadline ) }}
+                </div>
+              </v-list-tile>
+            </v-card-actions>
+          </v-card>
+        </v-hover>
 
-        </v-flex>
+      </v-flex>
 
-      </v-layout>
-    </v-container>
+    </v-layout>
 
     <post-list-paginate/>
 
