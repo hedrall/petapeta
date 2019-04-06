@@ -5,7 +5,8 @@ export interface RootState {
 }
 
 export interface EventLogsState {
-  eventLogs: EventLog[]
+  eventLogs: EventLog[],
+  loading: boolean
 }
 
 export interface PostsState {

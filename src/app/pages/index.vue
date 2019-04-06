@@ -50,10 +50,18 @@
     };
 
     async mounted() {
-      await Promise.all( [
-        this.fetchEventLogs(),
-        this.fetchPosts( { next_page: 1 } )
-      ] );
+      const tasks = [];
+
+      if ( this.getEventLogs.length === 0 ) {
+        tasks.push( this.fetchEventLogs() );
+      }
+      if ( this.getPosts.length === 0 ) {
+        tasks.push( this.fetchPosts( { next_page: 1 } ) );
+      }
+      if (tasks.length > 0) {
+        await Promise.all( tasks );
+      }
+
     };
 
     async asyncData ( {} ) {

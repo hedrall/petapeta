@@ -1,8 +1,19 @@
 <template>
   <div class="event-logs">
-    <v-card class="card"
-            v-if="getEventLogs && getEventLogs.length > 0" height="200">
-      <v-list one-line>
+    <v-card class="card" height="200">
+
+      <v-layout row wrap v-if="getLoading">
+        <v-flex xs12 class="progress-container">
+          <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+          ></v-progress-circular>
+        </v-flex>
+      </v-layout>
+
+
+      <v-list one-line v-if="getEventLogs && getEventLogs.length > 0">
         <v-list-tile v-for="log of getEventLogs" class="tile">
           <v-list-tile-content>
 
@@ -49,6 +60,8 @@
   export default class extends MyVue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
 
+    @Getter( "getLoading", { namespace: "event-logs" } ) getLoading;
+
     data( {} ) {
       return {
         PostStatuses
@@ -62,6 +75,14 @@
 </script>
 
 <style scoped lang="scss">
+
+  .progress-container {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
 
   .event-logs {
     min-height: 248px;

@@ -1,17 +1,22 @@
 <template>
 
-  <div>
-    <button class="button is-link back" @click="back">back</button>
+  <v-layout row wrap>
+    <v-flex xs12 class="mb-3">
+      <span class="indigo--text darken-2 subheading" @click="back">< back</span>
+    </v-flex>
 
-    <section class="section">
-      <h1 class="title">{{ post && post.url }}</h1>
+
+    <section class="section" v-if="post">
+      <h1 class="headline indigo--text text--darken-2">
+        <a :href="post.url" style="text-decoration: none">{{ post && post.url }}</a>
+      </h1>
       <h2 class="subtitle">{{ post && post.public_address }} さん</h2>
 
 
 
       <h1>{{ post_id }}</h1>
     </section>
-  </div>
+  </v-layout>
 </template>
 
 <script lang="ts">
