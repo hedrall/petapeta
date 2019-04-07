@@ -11,6 +11,11 @@
         <v-flex xs12>
           <v-card>
             <v-card-text>
+              <div v-if="isFinished()">
+                <v-chip  color="warning" text-color="white">
+                  終了
+                </v-chip>
+              </div>
               <h1 class="headline indigo--text text--darken-2">
                 <a :href="post.url" style="text-decoration: none">{{ post.url }}</a>
               </h1>
@@ -62,7 +67,7 @@
         <v-flex md6>
           <v-card height="100%">
             <v-card-title class="pb-0">
-              <v-chip color="primary" text-color="white">
+              <v-chip :color="isFinished() ? 'default' : 'primary' " text-color="white">
                 期限
               </v-chip>
             </v-card-title>
@@ -174,8 +179,16 @@
       return this.$moment( date ).format( "YYYY/MM/DD" );
     };
 
+    isFinished() {
+      const date = this.$moment(this.post.deadline).add(1, 'days');
+      return this.$moment(date).diff(this.now) < 0;
+    }
+
     remaining = ( date: string, now: any ): string => {
       date = this.$moment(date).add(1, 'days');
+      if ( this.$moment(date).diff(now) < 0 ) {
+        return '--日 --時間 --分 --秒';
+      }
       const days = this.$moment( date ).diff(this.$moment( now ), 'days');
       const hours = this.$moment( date ).diff(this.$moment( now ), 'hours') % 24;
       const minutes = this.$moment( date ).diff(this.$moment( now ), 'minutes') % 60;
