@@ -69,7 +69,7 @@
 
             <v-card-text class="text-xs-center">
               <p class="display-1 grey--text text--darken-2">{{ date( post.deadline ) }}</p>
-              <p>残り {{ remaining( post.deadline ) }}</p>
+              <p>残り {{ remaining( post.deadline, now ) }}</p>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -140,6 +140,8 @@
 
     post: Post = new Post( {} );
 
+    now: string = this.$moment();
+
     components = {};
 
     async asyncData( { params } ) {
@@ -154,6 +156,10 @@
     async mounted() {
       console.log( this.post );
       this.getPost();
+
+      setInterval( _ => {
+        this.now = this.$moment();
+      }, 1000)
     };
 
     // 投稿を取得する
@@ -168,13 +174,13 @@
       return this.$moment( date ).format( "YYYY/MM/DD" );
     };
 
-    remaining = ( date: string ): string => {
-      const now = this.$moment();
+    remaining = ( date: string, now: any ): string => {
       date = this.$moment(date).add(1, 'days');
       const days = this.$moment( date ).diff(this.$moment( now ), 'days');
       const hours = this.$moment( date ).diff(this.$moment( now ), 'hours') % 24;
       const minutes = this.$moment( date ).diff(this.$moment( now ), 'minutes') % 60;
-      return `${days}日 ${hours}時間 ${minutes}分`;
+      const seconds = this.$moment( date ).diff(this.$moment( now ), 'seconds') % 60;
+      return `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     };
 
     back() {
