@@ -119,6 +119,17 @@
                           URL:{{ collaborator.diffusion_url }}
                         </a>
                       </div>
+                      <v-layout>
+                        <v-flex sm4></v-flex>
+                        <v-flex sm4>
+                          <v-icon color="error">fas fa-heart</v-icon>
+                          {{ collaborator.favorites }}
+                        </v-flex>
+                        <v-flex sm4>
+                          <v-icon color="success">fas fa-retweet</v-icon>
+                          {{ collaborator.retweets }}
+                        </v-flex>
+                      </v-layout>
                     </v-card-text>
                   </v-card>
                 </v-timeline-item>
