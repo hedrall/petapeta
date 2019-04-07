@@ -128,12 +128,21 @@
                       <v-layout>
                         <v-flex sm4></v-flex>
                         <v-flex sm4>
-                          <v-icon color="error">fas fa-heart</v-icon>
-                          {{ collaborator.favorites }}
+                          <v-layout
+                              align-center
+                              justify-center
+                          >
+                            <v-icon color="error" class="mr-1">fas fa-heart</v-icon>
+                            {{ collaborator.favorites }}
+                          </v-layout>
                         </v-flex>
                         <v-flex sm4>
-                          <v-icon color="success">fas fa-retweet</v-icon>
+                          <v-layout
+                              align-center
+                              justify-center>
+                          <v-icon color="success" class="mr-1">fas fa-retweet</v-icon>
                           {{ collaborator.retweets }}
+                          </v-layout>
                         </v-flex>
                       </v-layout>
                     </v-card-text>
