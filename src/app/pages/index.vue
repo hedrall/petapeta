@@ -3,7 +3,7 @@
 
     <!-- イベントログ -->
     <section class="xs12 section">
-      <v-chip class="mb-3" color="primary" text-color="white">イベントログ</v-chip>
+      <v-chip class="elevation-4 mb-3" color="primary" text-color="white">イベントログ</v-chip>
 
       <event-logs />
     </section>
@@ -11,7 +11,7 @@
     <!-- 投稿一覧 -->
     <section class="section xs12">
 
-      <v-chip class="mb-3" color="primary" text-color="white">投稿一覧</v-chip>
+      <v-chip class="elevation-4 mb-3" color="primary" text-color="white">投稿一覧</v-chip>
 
       <posts-list />
 

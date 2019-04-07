@@ -12,7 +12,7 @@
           <v-card>
             <v-card-text>
               <div v-if="isFinished()">
-                <v-chip  color="warning" text-color="white">
+                <v-chip  color="elevation-4 warning" text-color="white">
                   終了
                 </v-chip>
               </div>
@@ -28,7 +28,7 @@
         <v-flex xs12>
           <v-card>
             <v-card-title class="pb-0">
-              <v-chip color="primary" text-color="white">
+              <v-chip color="elevation-4 primary" text-color="white">
                 協力者のみなさまへのメッセージ
               </v-chip>
             </v-card-title>
@@ -45,7 +45,7 @@
         <v-flex md6>
           <v-card height="100%">
             <v-card-title class="pb-0">
-              <v-chip color="primary" text-color="white">
+              <v-chip color="elevation-4 primary" text-color="white">
                 デポジット
               </v-chip>
             </v-card-title>
@@ -67,7 +67,10 @@
         <v-flex md6>
           <v-card height="100%">
             <v-card-title class="pb-0">
-              <v-chip :color="isFinished() ? 'default' : 'primary' " text-color="white">
+              <v-chip :color="isFinished() ? 'default' : 'primary' "
+                      text-color="white"
+                      class="elevation-4"
+              >
                 期限
               </v-chip>
             </v-card-title>
@@ -82,7 +85,10 @@
         <v-flex xs12>
           <v-card height="100%">
             <v-card-title class="pb-0 justify-space-between">
-              <v-chip color="primary" text-color="white">
+              <v-chip color="primary"
+                      text-color="white"
+                      class="elevation-4"
+              >
                 協力者
               </v-chip>
               <v-btn color="info">協力する</v-btn>
