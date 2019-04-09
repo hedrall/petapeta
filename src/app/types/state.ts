@@ -2,6 +2,8 @@ import { EventLog } from '~/types/EventLog';
 import { Post } from '~/types/post';
 
 export interface RootState {
+  isWeb3: boolean;
+  account: string;
 }
 
 export interface EventLogsState {

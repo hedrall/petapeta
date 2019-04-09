@@ -16,7 +16,8 @@
     "vuetify": "^1.5.9",
     "vuetify-loader": "^1.2.1",
     "vuetify-scss": "^1.4.0",
-    "vuex-class": "0.3.2"
+    "vuex-class": "0.3.2",
+    "web3": "^1.0.0-beta.52"
   },
   "scripts": {
     "dev": "nuxt-ts",

@@ -11,17 +11,26 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "nuxt-property-decorator"
-  import MyHeader from '~/components/MyHeader.vue'
-  import MyFooter from '~/components/MyFooter.vue'
+  import { Component, Vue } from "nuxt-property-decorator";
+  import MyHeader from "~/components/MyHeader.vue";
+  import MyFooter from "~/components/MyFooter.vue";
+  import { Web3Provider } from "~/web3Provider";
+  import { Action } from "vuex-class";
 
-  @Component({
+  @Component( {
     components: {
       MyHeader,
       MyFooter
     }
-  })
-  export default class extends Vue {}
+  } )
+  export default class extends Vue {
+    @Action( "setWeb3Info" ) setWeb3Info;
+
+    async mounted() {
+      await Web3Provider.setWeb3();
+      await this.setWeb3Info();
+    };
+  }
 </script>
 
 <style lang="scss">
