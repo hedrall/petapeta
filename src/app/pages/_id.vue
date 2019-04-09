@@ -234,6 +234,7 @@
 
     &:hover {
       background: $hover-background;
+      transition: background ease-in-out .3s;
     }
   }
 
