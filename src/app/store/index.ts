@@ -1,10 +1,12 @@
 import { RootState } from '~/types';
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import { Web3Provider } from '~/web3Provider';
+import { Eth } from '~/types/types';
 
 export const state = (): RootState => ({
   isWeb3: false,
-  account: ''
+  account: '',
+  networkId: 0,
 });
 
 export const getters: GetterTree<RootState, RootState> = {
@@ -13,13 +15,17 @@ export const getters: GetterTree<RootState, RootState> = {
   },
   getAccount( state: RootState ) {
     return state.account;
+  },
+  getNetWorkName( state: RootState ) {
+    return Eth.networkId[ state.networkId ];
   }
 };
 
 export const mutations: MutationTree<RootState> = {
-  setWeb3Info( state: RootState, { isWeb3, account } ) {
+  setWeb3Info( state: RootState, { isWeb3, account, networkId } ) {
     state.isWeb3 = isWeb3;
     state.account = account;
+    state.networkId = networkId;
   }
 };
 
@@ -29,7 +35,8 @@ export const actions: ActionTree<RootState, RootState> = {
       const accounts = await Web3Provider.web3.eth.getAccounts();
       commit( 'setWeb3Info', {
         isWeb3: true,
-        account: accounts[ 0 ]
+        account: accounts[ 0 ],
+        networkId: await Web3Provider.web3.eth.net.getId()
       } );
 
     }

@@ -4,6 +4,7 @@ import { Post } from '~/types/post';
 export interface RootState {
   isWeb3: boolean;
   account: string;
+  networkId: number;
 }
 
 export interface EventLogsState {

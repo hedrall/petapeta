@@ -6,10 +6,13 @@
         <img src="~/assets/imgs/petapeta_logo.png">
       </v-flex>
 
+      <v-layout xs6 style="display: flex;"
+                justify-end>
+        <v-chip class="login warning">
+          {{ getNetWorkName }}
+        </v-chip>
+      </v-layout>
 
-      <v-flex class="login" xs6>
-
-      </v-flex>
     </v-layout>
 
   </v-toolbar>
@@ -45,6 +48,7 @@
   export default class extends Vue {
     @Getter( 'getAccount' ) getAccount;
     @Getter( 'getIsWeb3' ) getIsWeb3;
+    @Getter( 'getNetWorkName' ) getNetWorkName;
 
     data () {
       return {}
