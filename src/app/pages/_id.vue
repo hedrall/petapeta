@@ -91,7 +91,7 @@
               >
                 協力者
               </v-chip>
-              <v-btn color="info">協力する</v-btn>
+              <spread></spread>
             </v-card-title>
 
             <v-card-text>
@@ -164,8 +164,11 @@
 
   import { Post, PostApiResponse } from "../types/post";
   import { MyVue } from "~/types/types";
+  import Spread from '~/components/Spread.vue';
 
-  @Component( {} )
+  @Component( {
+    components: { Spread }
+  } )
   export default class extends MyVue {
     post_id: number;
 
@@ -173,7 +176,9 @@
 
     now: string = this.$moment();
 
-    components = {};
+    components = {
+      Spread
+    };
 
     async asyncData( { params } ) {
       // await app.getPost();
@@ -186,6 +191,9 @@
 
     async mounted() {
       console.log( this.post );
+      console.log( 'page' );
+      console.log( this.$v );
+
       this.getPost();
 
       setInterval( _ => {

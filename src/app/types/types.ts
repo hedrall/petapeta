@@ -11,6 +11,8 @@ export class MyVue extends Vue {
   $router;
 
   $vuetify: VuetifyObject;
+
+  $v: any;
 }
 
 export namespace PostStatuses {

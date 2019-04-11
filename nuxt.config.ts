@@ -1,46 +1,49 @@
-import NuxtConfiguration from '@nuxt/config'
+import NuxtConfiguration from '@nuxt/config';
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin';
 
 const config: NuxtConfiguration = {
-  srcDir: 'src/app',
-  env: {},
-  head: {
-    title: "petapeta",
-    meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "Nuxt.js TypeScript project" }
+  srcDir:         'src/app',
+  env:            {},
+  head:           {
+    title: 'petapeta',
+    meta:  [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: 'Nuxt.js TypeScript project' }
     ],
-    link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }
+    link:  [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  loading: { color: "#3B8070" },
-  css: [
+  loading:        { color: '#3B8070' },
+  css:            [
     // "~/assets/css/main.css",
     // node.js module but we specify the pre-processor
-    { src: '~assets/scss/main.scss', lang: 'scss' },
+    { src: '~assets/scss/main.scss', lang: 'scss' }
   ],
   styleResources: {
     // your settings here
-    sass: ['~/assets/scss/main.scss'],
+    sass: [ '~/assets/scss/main.scss' ]
   },
-  build: {
+  build:          {
+    // vendor: ['vuelidate'],
     plugins:   [
       new VuetifyLoaderPlugin()
     ],
-    transpile: [ /^vuetify/ ],
+    transpile: [ /^vuetify/ ]
   },
-  modules: [
-    "@nuxtjs/axios",
+  modules:        [
+    '@nuxtjs/axios',
     '@nuxtjs/style-resources',
-      ['@nuxtjs/moment', ['ja']]
+    [ '@nuxtjs/moment', [ 'ja' ] ],
   ],
-  plugins: [
-    "@/plugins/vuetify.js",
-    "@/plugins/material-design-icons-iconfont.js"
+  plugins:        [
+    '@/plugins/vuetify.js',
+    '@/plugins/material-design-icons-iconfont.js',
+    // '@/plugins/vuelidate',
+    { src: '~/plugins/vuelidate' }
   ],
-  axios: {}
+  axios:          {}
 };
 
-export default config
+export default config;

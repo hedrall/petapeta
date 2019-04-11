@@ -1,7 +1,6 @@
 import { PostsState, RootState } from '~/types';
 import { ActionTree, GetterTree, MutationTree } from 'vuex';
 import { Post, PostsApiResponse } from '~/types/post';
-import { PostStatuses } from '~/types/types';
 
 export const state = (): PostsState => ({
   posts:    [] = [],
