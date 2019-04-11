@@ -26,7 +26,6 @@ const config: NuxtConfiguration = {
     sass: [ '~/assets/scss/main.scss' ]
   },
   build:          {
-    // vendor: ['vuelidate'],
     plugins:   [
       new VuetifyLoaderPlugin()
     ],
@@ -40,7 +39,6 @@ const config: NuxtConfiguration = {
   plugins:        [
     '@/plugins/vuetify.js',
     '@/plugins/material-design-icons-iconfont.js',
-    // '@/plugins/vuelidate',
     { src: '~/plugins/vuelidate' }
   ],
   axios:          {}
