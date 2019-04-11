@@ -1,6 +1,7 @@
 <template>
   <v-app class="indigo lighten-3">
     <my-header style="z-index: 100"/>
+    <sub-header/>
     <v-content class="default-layout">
       <v-container grid-list-md>
         <nuxt/>
@@ -12,15 +13,17 @@
 
 <script lang="ts">
   import { Component, Vue } from "nuxt-property-decorator";
-  import MyHeader from "~/components/MyHeader.vue";
-  import MyFooter from "~/components/MyFooter.vue";
   import { Web3Provider } from "~/web3Provider";
   import { Action } from "vuex-class";
+  import MyHeader from "~/components/MyHeader.vue";
+  import MyFooter from "~/components/MyFooter.vue";
+  import SubHeader from '~/components/SubHeader.vue';
 
   @Component( {
     components: {
       MyHeader,
-      MyFooter
+      MyFooter,
+      SubHeader
     }
   } )
   export default class extends Vue {
