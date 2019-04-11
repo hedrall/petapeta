@@ -1,13 +1,14 @@
 import { PostsState, RootState } from '~/types';
 import { ActionTree, GetterTree, MutationTree } from 'vuex';
 import { Post, PostsApiResponse } from '~/types/post';
+import { PostStatuses } from '~/types/types';
 
 export const state = (): PostsState => ({
   posts:    [] = [],
   page:     1,
-  per_page: 9,
-  total: 0,
-  loading: false
+  per_page: 12,
+  total:    0,
+  loading:  false
 });
 
 export const getters: GetterTree<PostsState, RootState> = {
@@ -18,12 +19,12 @@ export const getters: GetterTree<PostsState, RootState> = {
     return state.page;
   },
   getTotalPages( state: PostsState ): number[] {
-    if (!state.total) {
-      return [1];
+    if ( !state.total ) {
+      return [ 1 ];
     }
     return Array(
-      Math.floor(state.total / state.per_page) + ( !(state.total % state.per_page) ? 0 : 1 )
-    ).fill(1).map( (_, index) => index + 1 );
+      Math.floor( state.total / state.per_page ) + (!(state.total % state.per_page) ? 0 : 1)
+    ).fill( 1 ).map( ( _, index ) => index + 1 );
   },
   getLoading( state: PostsState ): boolean {
     return state.loading;
@@ -38,7 +39,7 @@ export const mutations: MutationTree<PostsState> = {
     } );
   },
   updatePaginateState( state: PostsState, { page, total } ) {
-    state.page = page;
+    state.page  = page;
     state.total = total;
   },
   toggleLoading( state: PostsState ) {
@@ -47,20 +48,20 @@ export const mutations: MutationTree<PostsState> = {
 };
 
 export const actions: ActionTree<PostsState, RootState> = {
-  async fetchPosts( { commit }, { next_page } ) {
+  async fetchPosts( { commit, state }, { next_page } ) {
     commit( 'toggleLoading' );
     commit( 'setPosts', [] );
 
-    await new Promise( resolve => setTimeout(resolve, 500));
+    await new Promise( resolve => setTimeout( resolve, 500 ) );
 
     // TODO: ページごとに取得する
     const result: PostsApiResponse = await (this as any).$axios.$get( '/api/posts.json' );
 
-    commit( 'setPosts', result.posts.map( _ => new Post( _ ) ) );
+    commit( 'setPosts', result.posts.slice( 0, state.per_page ).map( _ => new Post( _ ) ) );
     commit( 'updatePaginateState', {
-      page: next_page,
+      page:  next_page,
       total: result.total
-    });
+    } );
 
     commit( 'toggleLoading' );
   }

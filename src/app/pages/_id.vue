@@ -6,13 +6,13 @@
             @click="back">< back</span>
     </v-flex>
 
-    <v-flex xs12 v-if="post" >
+    <v-flex xs12 v-if="post">
       <v-layout row wrap>
         <v-flex xs12>
           <v-card>
             <v-card-text>
               <div v-if="isFinished()">
-                <v-chip  color="elevation-4 warning" text-color="white">
+                <v-chip color="elevation-4 warning" text-color="white">
                   終了
                 </v-chip>
               </div>
@@ -121,7 +121,7 @@
                       <div style="overflow: hidden;">
 
                         <a :href="collaborator.diffusion_url"
-                        style="text-decoration: none;">
+                           style="text-decoration: none;">
                           URL:{{ collaborator.diffusion_url }}
                         </a>
                       </div>
@@ -140,8 +140,8 @@
                           <v-layout
                               align-center
                               justify-center>
-                          <v-icon color="success" class="mr-1">fas fa-retweet</v-icon>
-                          {{ collaborator.retweets }}
+                            <v-icon color="success" class="mr-1">fas fa-retweet</v-icon>
+                            {{ collaborator.retweets }}
                           </v-layout>
                         </v-flex>
                       </v-layout>
@@ -190,35 +190,36 @@
 
       setInterval( _ => {
         this.now = this.$moment();
-      }, 1000)
+      }, 1000 );
     };
 
     // 投稿を取得する
     async getPost() {
       const result: PostApiResponse = await this.$axios.$get( "/api/post/id.json" );
       this.post                     = new Post( result.post );
-      console.log('投稿を取得');
-      console.log(this.post);
+      console.log( "投稿を取得" );
+      console.log( this.post );
     }
 
     date = function ( date: string ): string {
       return this.$moment( date ).format( "YYYY/MM/DD" );
     };
 
+    // 拡散協力期限が終了しているか
     isFinished() {
-      const date = this.$moment(this.post.deadline).add(1, 'days');
-      return this.$moment(date).diff(this.now) < 0;
+      const date = this.$moment( this.post.deadline ).add( 1, "days" );
+      return this.$moment( date ).diff( this.now ) < 0;
     }
 
     remaining = ( date: string, now: any ): string => {
-      date = this.$moment(date).add(1, 'days');
-      if ( this.$moment(date).diff(now) < 0 ) {
-        return '--日 --時間 --分 --秒';
+      date = this.$moment( date ).add( 1, "days" );
+      if ( this.$moment( date ).diff( now ) < 0 ) {
+        return "--日 --時間 --分 --秒";
       }
-      const days = this.$moment( date ).diff(this.$moment( now ), 'days');
-      const hours = this.$moment( date ).diff(this.$moment( now ), 'hours') % 24;
-      const minutes = this.$moment( date ).diff(this.$moment( now ), 'minutes') % 60;
-      const seconds = this.$moment( date ).diff(this.$moment( now ), 'seconds') % 60;
+      const days    = this.$moment( date ).diff( this.$moment( now ), "days" );
+      const hours   = this.$moment( date ).diff( this.$moment( now ), "hours" ) % 24;
+      const minutes = this.$moment( date ).diff( this.$moment( now ), "minutes" ) % 60;
+      const seconds = this.$moment( date ).diff( this.$moment( now ), "seconds" ) % 60;
       return `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     };
 

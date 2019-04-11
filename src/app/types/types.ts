@@ -1,6 +1,17 @@
 import { Vue } from 'nuxt-property-decorator';
+import { VuetifyObject } from 'vuetify';
 
 export type PostState = 0 | 1 | 2
+
+export class MyVue extends Vue {
+  $axios;
+
+  $moment;
+
+  $router;
+
+  $vuetify: VuetifyObject;
+}
 
 export namespace PostStatuses {
   export const open  = 0;
@@ -16,14 +27,6 @@ export namespace Eth {
     4:  'Rinkeby',
     42: 'Kovan'
   };
-}
-
-export class MyVue extends Vue {
-  $axios;
-
-  $moment;
-
-  $router;
 }
 
 export type SNS = 'twitter';
