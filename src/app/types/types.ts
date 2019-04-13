@@ -1,6 +1,7 @@
 import { Vue } from 'nuxt-property-decorator';
 import { VuetifyObject } from 'vuetify';
 
+
 export type PostState = 0 | 1 | 2
 
 export class MyVue extends Vue {

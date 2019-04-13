@@ -20,14 +20,18 @@
         <v-card-text>
           <form>
             <v-text-field
-                v-model="name"
-                :error-messages="nameErrors"
+                solo
+                :value="getAccount"
+                :error-messages="accountErrors"
                 :counter="10"
                 label="Name"
+                placehosder="あなたのEthアドレス"
+                :disabled="true"
                 required
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+                @input="$v.account.$touch()"
+                @blur="$v.account.$touch()"
             ></v-text-field>
+
 
             <v-btn @click="submit">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
@@ -77,10 +81,11 @@
   import { Component } from "nuxt-property-decorator";
   import { email, required } from "vuelidate/lib/validators";
   import { MyVue } from '~/types/types';
+  import { Getter } from 'vuex-class';
 
-  @Component( {
-    validations:{
-      name:     { required },
+  @(Component as any)( {
+    validations: {
+      account:     { required },
       email:    { required, email },
       select:   { required },
       checkbox: {
@@ -127,13 +132,15 @@
 
   } )
   export default class Spread extends MyVue {
-    name: string = "test";
+    @Getter( 'getAccount' ) getAccount;
+
+    account: string = "";
     email:    "";
     checkbox: false;
 
-    get nameErrors() {
+    get accountErrors() {
       const errors = [];
-      !(this as any).$v.name.required && errors.push( "Name is required." );
+      !(this as any).$v.account.required && errors.push( "Name is required." );
       return errors;
     };
 

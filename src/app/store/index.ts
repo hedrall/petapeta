@@ -31,8 +31,16 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
   async setWeb3Info( { commit } ) {
-    if ( Web3Provider.web3 ) {
-      const accounts = await Web3Provider.web3.eth.getAccounts();
+    if ( Web3Provider.ethereum ) {
+      let accounts;
+      try {
+        accounts = await Web3Provider.ethereum.enable();
+      } catch ( e ) {
+        console.error('ログインをキャンセルしました。');
+        console.error(e);
+        return;
+      }
+      console.log( accounts );
       commit( 'setWeb3Info', {
         isWeb3: true,
         account: accounts[ 0 ],
