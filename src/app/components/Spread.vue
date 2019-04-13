@@ -39,14 +39,6 @@
                 required
             ></v-text-field>
 
-            <v-text-field
-                    value="John Doe"
-                    label="Outline"
-                    outline
-                    readonly
-            ></v-text-field>
-
-
             <v-btn @click="submit">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
           </form>
