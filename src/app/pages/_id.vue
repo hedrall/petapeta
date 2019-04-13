@@ -91,7 +91,7 @@
               >
                 協力者
               </v-chip>
-              <spread></spread>
+              <spread :post="post"></spread>
             </v-card-title>
 
             <v-card-text>

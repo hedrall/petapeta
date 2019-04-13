@@ -30,8 +30,10 @@
     @Action( "setWeb3Info" ) setWeb3Info;
 
     async mounted() {
+      console.log('mounted Default Layout');
       await Web3Provider.setWeb3();
       await this.setWeb3Info();
+      console.log('mounted Default Layout end');
     };
   }
 </script>

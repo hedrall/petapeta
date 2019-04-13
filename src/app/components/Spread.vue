@@ -19,17 +19,31 @@
         </v-toolbar>
         <v-card-text>
           <form>
+
             <v-text-field
-                solo
-                :value="getAccount"
-                :error-messages="accountErrors"
-                :counter="10"
-                label="Name"
+                v-model="post.url"
+                label="あなたのEthアドレス"
                 placehosder="あなたのEthアドレス"
-                :disabled="true"
+                outline
+                readonly
                 required
-                @input="$v.account.$touch()"
-                @blur="$v.account.$touch()"
+            ></v-text-field>
+
+            <v-text-field
+                v-model="$store.state.account"
+                :counter="42"
+                label="あなたのEthアドレス"
+                placehosder="あなたのEthアドレス"
+                outline
+                readonly
+                required
+            ></v-text-field>
+
+            <v-text-field
+                    value="John Doe"
+                    label="Outline"
+                    outline
+                    readonly
             ></v-text-field>
 
 
@@ -78,7 +92,7 @@
 </template>
 
 <script lang="ts">
-  import { Component } from "nuxt-property-decorator";
+  import { Component, Prop } from "nuxt-property-decorator";
   import { email, required } from "vuelidate/lib/validators";
   import { MyVue } from '~/types/types';
   import { Getter } from 'vuex-class';
@@ -134,12 +148,12 @@
   export default class Spread extends MyVue {
     @Getter( 'getAccount' ) getAccount;
 
-    account: string = "";
-    email:    "";
-    checkbox: false;
+    @Prop() post!: string;
 
     get accountErrors() {
       const errors = [];
+      console.log('name');
+      console.log(this.$v.name);
       !(this as any).$v.account.required && errors.push( "Name is required." );
       return errors;
     };
