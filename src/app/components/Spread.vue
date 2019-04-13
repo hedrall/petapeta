@@ -1,13 +1,8 @@
 <template>
   <div>
     <v-btn color="info" @click="dialog = true">協力する</v-btn>
-
     <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        scrollable
+            v-model="dialog"
     >
       <v-card tile>
         <v-toolbar card dark color="primary">
@@ -21,77 +16,62 @@
           <form>
 
             <v-text-field
-                v-model="post.url"
-                label="あなたのEthアドレス"
-                placehosder="あなたのEthアドレス"
-                outline
-                readonly
-                required
+                    v-model="post.url"
+                    label="拡散協力するURL"
+                    placehosder="拡散協力するURL"
+                    outline
+                    readonly
+                    required
             ></v-text-field>
 
             <v-text-field
-                v-model="$store.state.account"
-                :counter="42"
-                label="あなたのEthアドレス"
-                placehosder="あなたのEthアドレス"
-                outline
-                readonly
-                required
+                    v-model="$store.state.account"
+                    :counter="42"
+                    label="あなたのEthアドレス"
+                    placehosder="あなたのEthアドレス"
+                    outline
+                    readonly
+                    required
             ></v-text-field>
-
-            <v-btn @click="submit">submit</v-btn>
-            <v-btn @click="clear">clear</v-btn>
           </form>
 
-          <v-divider></v-divider>
-          <v-list three-line subheader>
-            <v-subheader>General</v-subheader>
-            <v-list-tile avatar>
-              <v-list-tile-action>
-                <v-checkbox v-model="notifications"></v-checkbox>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>Notifications</v-list-tile-title>
-                <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded
-                </v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar>
-              <v-list-tile-action>
-                <v-checkbox v-model="sound"></v-checkbox>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>Sound</v-list-tile-title>
-                <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar>
-              <v-list-tile-action>
-                <v-checkbox v-model="widgets"></v-checkbox>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-                <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-card-text>
+          <div class="pl-1">
+            <p class="warning--text">
+              > tweetには「拡散協力するURL」と「あなたのEthアドレス」を必ず記載してください。
+            </p>
+            <p class="warning--text">
+              > 上記の記載がない場合は報酬の対象外になります。
+            </p>
+          </div>
 
-        <div style="flex: 1 1 auto;"></div>
+          <v-layout v-if="isAccount"
+                    justify-center
+          >
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+               class="twitter-share-button"
+               :data-text="`応援しています！ by ${$store.state.account}`"
+               :data-url="post.url"
+               data-hashtags="petapeta"
+               data-size="large"
+               data-show-count="false">呟く</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </v-layout>
+
+        </v-card-text>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script lang="ts">
-  import { Component, Prop } from "nuxt-property-decorator";
+  import { Component, Prop, Watch } from "nuxt-property-decorator";
   import { email, required } from "vuelidate/lib/validators";
-  import { MyVue } from '~/types/types';
-  import { Getter } from 'vuex-class';
+  import { MyVue } from "~/types/types";
+  import { Getter } from "vuex-class";
 
   @(Component as any)( {
     validations: {
-      account:     { required },
+      account:  { required },
       email:    { required, email },
       select:   { required },
       checkbox: {
@@ -138,14 +118,24 @@
 
   } )
   export default class Spread extends MyVue {
-    @Getter( 'getAccount' ) getAccount;
+    @Getter( "getAccount" ) getAccount;
 
     @Prop() post!: string;
 
+    isAccount: boolean = false;
+
+    mounted() {
+    }
+
+    @Watch( "getAccount" )
+    onAccountChange( _new ) {
+      this.isAccount = !!_new;
+    };
+
     get accountErrors() {
       const errors = [];
-      console.log('name');
-      console.log(this.$v.name);
+      console.log( "name" );
+      console.log( this.$v.name );
       !(this as any).$v.account.required && errors.push( "Name is required." );
       return errors;
     };
@@ -154,30 +144,31 @@
       const errors = [];
       if ( !(this as any).$v.checkbox.$dirty ) return errors;
       !(this as any).$v.checkbox.checked && errors.push( "You must agree to continue!" );
-      console.log(errors);
+      console.log( errors );
       return errors;
     };
 
     emailErrors() {
-      const errors = [''];
+      const errors = [ "" ];
       if ( !(this as any).$v.email.$dirty ) return errors;
       !(this as any).$v.email.email && errors.push( "Must be valid e-mail" );
       !(this as any).$v.email.required && errors.push( "E-mail is required" );
 
-      console.log('error');
-      console.log(errors);
+      console.log( "error" );
+      console.log( errors );
       return errors;
     };
 
     submit() {
-      ( this as any).$v.$touch();
+      (this as any).$v.$touch();
     };
+
     clear() {
-      ( this as any).$v.$reset();
-      ( this as any).name     = "";
-      ( this as any).email    = "";
-      ( this as any).select   = null;
-      ( this as any).checkbox = false;
+      (this as any).$v.$reset();
+      (this as any).name     = "";
+      (this as any).email    = "";
+      (this as any).select   = null;
+      (this as any).checkbox = false;
     }
 
   }
