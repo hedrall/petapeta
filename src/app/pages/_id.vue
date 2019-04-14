@@ -1,9 +1,12 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 class="mb-3">
-      <span class="back-button indigo--text darken-2 subheading px-3 py-2"
-            style="border-radius: 5px"
-            @click="back">< back</span>
+      <nuxt-link
+              to="/"
+              class="back-button indigo--text darken-2 subheading px-3 py-2"
+              style="border-radius: 5px; text-decoration: none"
+              @click="back">< back
+      </nuxt-link>
     </v-flex>
 
     <v-flex xs12 v-if="post">
@@ -96,12 +99,12 @@
 
             <v-card-text>
               <v-timeline
-                  :dense="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
+                      :dense="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm"
               >
                 <v-timeline-item
-                    v-for="collaborator in post.collaborators"
-                    color="indigo lighten-1"
-                    large
+                        v-for="collaborator in post.collaborators"
+                        color="indigo lighten-1"
+                        large
                 >
                   <template v-slot:opposite>
                     <span>{{ date(collaborator.created_at) }}</span>
@@ -129,8 +132,8 @@
                         <v-flex sm4></v-flex>
                         <v-flex sm4>
                           <v-layout
-                              align-center
-                              justify-center
+                                  align-center
+                                  justify-center
                           >
                             <v-icon color="error" class="mr-1">fas fa-heart</v-icon>
                             {{ collaborator.favorites }}
@@ -138,8 +141,8 @@
                         </v-flex>
                         <v-flex sm4>
                           <v-layout
-                              align-center
-                              justify-center>
+                                  align-center
+                                  justify-center>
                             <v-icon color="success" class="mr-1">fas fa-retweet</v-icon>
                             {{ collaborator.retweets }}
                           </v-layout>
@@ -164,7 +167,7 @@
 
   import { Post, PostApiResponse } from "../types/post";
   import { MyVue } from "~/types/types";
-  import Spread from '~/components/Spread.vue';
+  import Spread from "~/components/Spread.vue";
 
   @Component( {
     components: { Spread }
@@ -191,7 +194,7 @@
 
     async mounted() {
       console.log( this.post );
-      console.log( 'page' );
+      console.log( "page" );
       console.log( this.$v );
 
       this.getPost();
@@ -240,10 +243,10 @@
 <style scoped lang="scss">
   .back-button {
     cursor: pointer;
+    transition: background ease-in-out .3s;
 
     &:hover {
       background: $hover-background;
-      transition: background ease-in-out .3s;
     }
   }
 

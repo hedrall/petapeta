@@ -22,7 +22,7 @@
       <v-card tile>
         <v-toolbar card dark color="primary">
           <v-btn icon dark @click="close();">
-            <v-icon>閉じる</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>拡散に協力する</v-toolbar-title>
           <v-spacer></v-spacer>
