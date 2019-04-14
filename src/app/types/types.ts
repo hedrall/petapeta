@@ -14,6 +14,8 @@ export class MyVue extends Vue {
   $vuetify: VuetifyObject;
 
   $v: any;
+
+  $twttr;
 }
 
 export namespace PostStatuses {

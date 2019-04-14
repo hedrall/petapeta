@@ -39,7 +39,8 @@ const config: NuxtConfiguration = {
   plugins:        [
     '@/plugins/vuetify.js',
     '@/plugins/material-design-icons-iconfont.js',
-    { src: '~/plugins/vuelidate' }
+    { src: '~/plugins/vuelidate' },
+    { src: '~/plugins/twitter', ssr: false }
   ],
   axios:          {}
 };

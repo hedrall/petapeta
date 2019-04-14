@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn color="info" @click="dialog = true">協力する</v-btn>
+    <v-btn color="info" @click="showDialog">協力する</v-btn>
     <v-dialog
             v-model="dialog"
     >
@@ -14,6 +14,9 @@
         </v-toolbar>
         <v-card-text>
           <form>
+            <p class="primary--text subheading">
+              ステップ1. Twitterで拡散する
+            </p>
 
             <v-text-field
                     v-model="post.url"
@@ -53,10 +56,36 @@
                :data-url="post.url"
                data-hashtags="petapeta"
                data-size="large"
-               data-show-count="false">呟く</a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+               data-show-count="false"
+               target="_blank"
+            >呟く</a>
           </v-layout>
 
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-text>
+          <form>
+            <p class="primary--text subheading">
+              ステップ2. 拡散したTweetページを登録する
+            </p>
+
+            <v-text-field
+                    v-model="tweetUrl"
+                    label="TweetページのURL"
+                    placehosder="TweetページのURL"
+                    :error-messages="tweetUrlErrors"
+                    outline
+                    required
+                    @input="$v.tweetUrl.$touch()"
+                    @blur="$v.tweetUrl.$touch()"
+            ></v-text-field>
+
+          </form>
+          <v-layout justify-center>
+            <v-btn color="info" @click="showDialog">登録する</v-btn>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -67,14 +96,50 @@
   import { Component, Prop, Watch } from "nuxt-property-decorator";
   import { MyVue } from "~/types/types";
   import { Getter } from "vuex-class";
+  import { isValidTweetUrl } from '~/util/validation';
 
-  @Component( {} )
+  @(Component as any)( {
+    validations: {
+      tweetUrl: {
+        isValidTweetUrl
+      },
+    }
+  } )
   export default class Spread extends MyVue {
     @Getter( "getAccount" ) getAccount;
 
     @Prop() post!: string;
 
     dialog: boolean = false;
+
+    tweetUrl: string = '';
+
+    get tweetUrlErrors () {
+      const errors = [];
+      if (!this.$v.tweetUrl.$dirty) return [];
+
+      // !this.$v.email.email && errors.push('Must be valid e-mail')
+      // !this.$v.email.required && errors.push('E-mail is required')
+      console.log('is error?');
+      console.log(this.$v);
+      console.log(this.$v.tweetUrl);
+
+      !this.$v.tweetUrl.isValidTweetUrl && errors.push('TweetのURLの形式が正しくありません。');
+
+      return errors
+    };
+
+    showDialog() {
+      this.dialog = true;
+
+      // share button を初期化
+      this.$twttr.ready( ( twttr ) => {
+        twttr.widgets.load();
+
+        // twttr.events.bind( "tweet", () => {} );
+      } );
+
+    }
 
     isAccount: boolean = false;
 
