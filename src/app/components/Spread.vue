@@ -114,21 +114,17 @@
 
     tweetUrl: string = '';
 
+    // tweet URL 登録フォームのエラーメッセージを設定
     get tweetUrlErrors () {
       const errors = [];
       if (!this.$v.tweetUrl.$dirty) return [];
-
-      // !this.$v.email.email && errors.push('Must be valid e-mail')
-      // !this.$v.email.required && errors.push('E-mail is required')
-      console.log('is error?');
-      console.log(this.$v);
-      console.log(this.$v.tweetUrl);
 
       !this.$v.tweetUrl.isValidTweetUrl && errors.push('TweetのURLの形式が正しくありません。');
 
       return errors
     };
 
+    // ダイアログを見せる時の動作
     showDialog() {
       this.dialog = true;
 
