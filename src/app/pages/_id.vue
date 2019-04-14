@@ -87,6 +87,42 @@
 
         <v-flex xs12>
           <v-card height="100%">
+
+            <!--ソート -->
+            <v-bottom-nav
+                    :active.sync="sortMethod"
+                    :value="true"
+                    color="transparent"
+                    shift
+            >
+              <v-btn
+                      color="teal"
+                      flat
+                      value="recent"
+              >
+                <span>最新</span>
+                <v-icon>history</v-icon>
+              </v-btn>
+
+              <v-btn
+                      color="teal"
+                      flat
+                      value="favorites"
+              >
+                <span>お気に入り</span>
+                <v-icon>favorite</v-icon>
+              </v-btn>
+
+              <v-btn
+                      color="teal"
+                      flat
+                      value="retweets"
+              >
+                <span>リツイート</span>
+                <v-icon>fas fa-retweet</v-icon>
+              </v-btn>
+            </v-bottom-nav>
+
             <v-card-title class="pb-0 justify-space-between">
               <v-chip color="primary"
                       text-color="white"
@@ -96,6 +132,7 @@
               </v-chip>
               <spread :post="post"></spread>
             </v-card-title>
+
 
             <v-card-text>
               <v-timeline
@@ -163,11 +200,12 @@
 </template>
 
 <script lang="ts">
-  import { Component } from "nuxt-property-decorator";
+  import { Component, Watch } from 'nuxt-property-decorator';
 
-  import { Post, PostApiResponse } from "../types/post";
-  import { MyVue } from "~/types/types";
-  import Spread from "~/components/Spread.vue";
+  import { Post, PostApiResponse } from '../types/post';
+  import { MyVue } from '~/types/types';
+  import Spread from '~/components/Spread.vue';
+  import { Collaborator } from '~/types/collaborator';
 
   @Component( {
     components: { Spread }
@@ -179,6 +217,8 @@
 
     now: string = this.$moment();
 
+    sortMethod: 'recent' | 'favorites' | 'retweets' | '' = '';
+
     components = {
       Spread
     };
@@ -188,17 +228,16 @@
       return {
         // context,
         post:    null,
-        post_id: params[ "id" ]
+        post_id: params[ 'id' ]
       };
     }
 
     async mounted() {
-      console.log( this.post );
-      console.log( "page" );
-      console.log( this.$v );
+      await this.getPost();
 
-      this.getPost();
+      this.sortMethod = 'recent';
 
+      // 残り時間カウント表示
       setInterval( _ => {
         this.now = this.$moment();
       }, 1000 );
@@ -206,36 +245,65 @@
 
     // 投稿を取得する
     async getPost() {
-      const result: PostApiResponse = await this.$axios.$get( "/api/post/id.json" );
+      const result: PostApiResponse = await this.$axios.$get( '/api/post/id.json' );
       this.post                     = new Post( result.post );
-      console.log( "投稿を取得" );
+      console.log( '投稿を取得' );
       console.log( this.post );
     }
 
     date = function ( date: string ): string {
-      return this.$moment( date ).format( "YYYY/MM/DD" );
+      return this.$moment( date ).format( 'YYYY/MM/DD' );
     };
 
     // 拡散協力期限が終了しているか
     isFinished() {
-      const date = this.$moment( this.post.deadline ).add( 1, "days" );
+      const date = this.$moment( this.post.deadline ).add( 1, 'days' );
       return this.$moment( date ).diff( this.now ) < 0;
     }
 
     remaining = ( date: string, now: any ): string => {
-      date = this.$moment( date ).add( 1, "days" );
+      date = this.$moment( date ).add( 1, 'days' );
       if ( this.$moment( date ).diff( now ) < 0 ) {
-        return "--日 --時間 --分 --秒";
+        return '--日 --時間 --分 --秒';
       }
-      const days    = this.$moment( date ).diff( this.$moment( now ), "days" );
-      const hours   = this.$moment( date ).diff( this.$moment( now ), "hours" ) % 24;
-      const minutes = this.$moment( date ).diff( this.$moment( now ), "minutes" ) % 60;
-      const seconds = this.$moment( date ).diff( this.$moment( now ), "seconds" ) % 60;
+      const days    = this.$moment( date ).diff( this.$moment( now ), 'days' );
+      const hours   = this.$moment( date ).diff( this.$moment( now ), 'hours' ) % 24;
+      const minutes = this.$moment( date ).diff( this.$moment( now ), 'minutes' ) % 60;
+      const seconds = this.$moment( date ).diff( this.$moment( now ), 'seconds' ) % 60;
       return `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     };
 
     back() {
       this.$router.go( -1 );
+    }
+
+    @Watch( 'sortMethod' )
+    onChangeSortMethod( _new ) {
+      let sortFn;
+      switch ( _new ) {
+        case 'favorites':
+          sortFn = ( a: Collaborator, b: Collaborator ): number => {
+            if ( a.favorites === b.favorites) return 0;
+            return ( a.favorites > b.favorites ) ? -1 : 1;
+          };
+          break;
+        case 'retweets':
+          sortFn = ( a: Collaborator, b: Collaborator ): number => {
+            if ( a.retweets === b.retweets) return 0;
+            return ( a.retweets > b.retweets ) ? -1 : 1;
+          };
+          break;
+        case 'recent':
+          sortFn = ( a: Collaborator, b: Collaborator ): number => {
+            const diff = this.$moment( a.created_at ).diff( this.$moment( b.created_at ) );
+            if ( diff === 0 ) return 0;
+            return ( diff > 0 ) ? -1 : 1;
+          };
+          break;
+        default:
+          return;
+      }
+      this.post.collaborators = this.post.collaborators.sort( sortFn );
     }
   }
 </script>
