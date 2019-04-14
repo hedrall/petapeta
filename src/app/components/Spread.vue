@@ -1,13 +1,28 @@
 <template>
   <div>
     <v-btn color="info" @click="showDialog">協力する</v-btn>
-    <v-dialog
-            v-model="dialog"
+    <v-snackbar
+            v-model="snackbar"
+            :right="'right'"
+            :top="'top'"
+            :vertical="'vertical'"
+            color="success"
+            @click="snackbar = false"
     >
+      登録が完了しました。
+      <v-btn
+              color="white-text"
+              flat
+              @click="snackbar = false"
+      >
+        閉じる
+      </v-btn>
+    </v-snackbar>
+    <v-dialog v-model="dialog">
       <v-card tile>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click="dialog = false">
-            <v-icon>close</v-icon>
+          <v-btn icon dark @click="close();">
+            <v-icon>閉じる</v-icon>
           </v-btn>
           <v-toolbar-title>拡散に協力する</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -84,7 +99,10 @@
 
           </form>
           <v-layout justify-center>
-            <v-btn color="info" @click="showDialog">登録する</v-btn>
+            <v-btn color="primary"
+                   @click="register"
+                   :loading="registering"
+            >登録する</v-btn>
           </v-layout>
         </v-card-text>
       </v-card>
@@ -97,11 +115,13 @@
   import { MyVue } from "~/types/types";
   import { Getter } from "vuex-class";
   import { isValidTweetUrl } from '~/util/validation';
+  import { required } from 'vuelidate/lib/validators';
 
   @(Component as any)( {
     validations: {
       tweetUrl: {
-        isValidTweetUrl
+        isValidTweetUrl,
+        required
       },
     }
   } )
@@ -112,13 +132,18 @@
 
     dialog: boolean = false;
 
+    registering: boolean = false;
+
     tweetUrl: string = '';
+
+    snackbar: boolean = false;
 
     // tweet URL 登録フォームのエラーメッセージを設定
     get tweetUrlErrors () {
       const errors = [];
       if (!this.$v.tweetUrl.$dirty) return [];
 
+      !this.$v.tweetUrl.required && errors.push('TweetのURLは必須です。');
       !this.$v.tweetUrl.isValidTweetUrl && errors.push('TweetのURLの形式が正しくありません。');
 
       return errors
@@ -142,6 +167,28 @@
     mounted() {
       this.isAccount = !!this.getAccount;
     }
+
+    close () {
+      this.dialog = false;
+    };
+
+    // 拡散 Tweet の Url 登録処理
+    register () {
+
+      this.$v.$touch();
+
+      if ( this.$v.$invalid ) {
+        return;
+      }
+      this.registering = true;
+
+      setTimeout( _ => {
+        this.registering = false;
+        this.dialog = false;
+        this.snackbar = true;
+      }, 1000);
+
+    };
 
     @Watch( "getAccount" )
     onAccountChange( _new ) {
