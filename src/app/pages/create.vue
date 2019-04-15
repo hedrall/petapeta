@@ -136,6 +136,24 @@
       </v-btn>
     </v-snackbar>
 
+    <v-snackbar
+            v-model="snackbarTxError"
+            :right="'right'"
+            :top="'top'"
+            :vertical="'vertical'"
+            color="error"
+            @click="snackbarTxError = false"
+    >
+      登録を中止しました。
+      <v-btn
+              color="white-text"
+              flat
+              @click="snackbarTxError = false"
+      >
+        閉じる
+      </v-btn>
+    </v-snackbar>
+
   </div>
 </template>
 
@@ -164,7 +182,7 @@
     message: string = '拡散にご協力お願いいたします。  ';
 
     // 拡散者へのお礼
-    deposit: number = 0.1;
+    deposit: number = 0.01;
 
     dialog: boolean = false;
 
@@ -173,6 +191,8 @@
     snackbarTxStart: boolean = false;
 
     snackbarTxComplete: boolean = false;
+
+    snackbarTxError: boolean = false;
 
     get urlErrors() {
       const errors = [];
@@ -231,20 +251,25 @@
 
       console.log( txObject );
       // トランザクションを実行します。
-      Web3Provider.web3.eth.sendTransaction( txObject )
-      .on( 'transactionHash', ( hash ) => {
+
+      Web3Provider.web3.eth.sendTransaction( txObject ).on( 'transactionHash', ( hash ) => {
         console.log( 'transaction hash: ', hash );
         this.snackbarTxStart = true;
-      } )
-      .on( 'receipt', ( receipt ) => {
+      } ).on( 'receipt', ( receipt ) => {
         console.log( 'receipt: ', receipt );
-      } )
-      .on( 'confirmation', ( confirmationNumber, receipt ) => {
+      } ).on( 'confirmation', ( confirmationNumber, receipt ) => {
         console.log( 'confirmationNumber: ', confirmationNumber );
         this.snackbarTxComplete = true;
-        this.dialog = false;
-      } )
-      .on( 'error', console.error );
+        this.dialog             = false;
+        this.loading            = false;
+      } ).on( 'error', error => {
+        console.log( error );
+        console.log( 'error' );
+        this.dialog          = false;
+        this.loading         = false;
+        this.snackbarTxError = true;
+      } );
+
     }
   }
 </script>
