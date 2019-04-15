@@ -91,8 +91,50 @@
             </v-btn>
           </v-layout>
         </v-card-actions>
+        <v-card-text>
+          <p class="warning--text subheading" v-if="loading">
+            > 処理にはしばらく時間がかかります。
+          </p>
+        </v-card-text>
+
       </v-card>
     </v-dialog>
+
+    <v-snackbar
+            v-model="snackbarTxStart"
+            :right="'right'"
+            :top="'top'"
+            :vertical="'vertical'"
+            color="success"
+            @click="snackbarTxStart = false"
+    >
+      登録開始
+      <v-btn
+              color="white-text"
+              flat
+              @click="snackbarTxStart = false"
+      >
+        閉じる
+      </v-btn>
+    </v-snackbar>
+
+    <v-snackbar
+            v-model="snackbarTxComplete"
+            :right="'right'"
+            :top="'top'"
+            :vertical="'vertical'"
+            color="success"
+            @click="snackbarTxComplete = false"
+    >
+      登録完了
+      <v-btn
+              color="white-text"
+              flat
+              @click="snackbarTxComplete = false"
+      >
+        閉じる
+      </v-btn>
+    </v-snackbar>
 
   </div>
 </template>
@@ -108,7 +150,7 @@
     validations: {
       url:     { required, url, maxLength: maxLength( 100 ) },
       message: { required, maxLength: maxLength( 1000 ) },
-      deposit: { required, between: between(20, 30)( 10 ) }
+      deposit: { required, between: between( 20, 30 )( 10 ) }
     },
     components:  {}
   } )
@@ -127,6 +169,10 @@
     dialog: boolean = false;
 
     loading: boolean = false;
+
+    snackbarTxStart: boolean = false;
+
+    snackbarTxComplete: boolean = false;
 
     get urlErrors() {
       const errors = [];
@@ -166,14 +212,39 @@
       this.dialog = true;
     }
 
+    // デポジットを実行し、投稿を作成する
     async createPost() {
       this.loading = true;
 
       const to_address = '0x4dC08065A1949df271E9211Fc974360C64262AfA';
 
       // 送付する Ether の量を wei に変換します。
-      const weiValue = Web3Provider.web3.utils.toWei(this.deposit.toString(), 'ether');
-      console.log('');
+      const weiValue = Web3Provider.web3.utils.toWei( this.deposit.toString(), 'ether' );
+      console.log( 'wei' + weiValue );
+
+      // トランザクションオブジェクトを作成します。
+      const txObject = {
+        from:  this.getAccount, // Ether の送付元アドレス
+        to:    to_address,        // Ether の送付先アドレス
+        value: weiValue       // 送付する Ether の量（単位は wei）
+      };
+
+      console.log( txObject );
+      // トランザクションを実行します。
+      Web3Provider.web3.eth.sendTransaction( txObject )
+      .on( 'transactionHash', ( hash ) => {
+        console.log( 'transaction hash: ', hash );
+        this.snackbarTxStart = true;
+      } )
+      .on( 'receipt', ( receipt ) => {
+        console.log( 'receipt: ', receipt );
+      } )
+      .on( 'confirmation', ( confirmationNumber, receipt ) => {
+        console.log( 'confirmationNumber: ', confirmationNumber );
+        this.snackbarTxComplete = true;
+        this.dialog = false;
+      } )
+      .on( 'error', console.error );
     }
   }
 </script>
