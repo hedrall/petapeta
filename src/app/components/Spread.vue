@@ -126,7 +126,7 @@
     }
   } )
   export default class Spread extends MyVue {
-    @Getter( "getAccount" ) getAccount;
+    @Getter( 'getAccount' ) getAccount;
 
     @Prop() post!: string;
 

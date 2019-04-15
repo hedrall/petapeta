@@ -1,13 +1,5 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 class="mb-3">
-      <nuxt-link
-              to="/"
-              class="back-button indigo--text darken-2 subheading px-3 py-2"
-              style="border-radius: 5px; text-decoration: none"
-              @click="back">< back
-      </nuxt-link>
-    </v-flex>
 
     <v-flex xs12 v-if="post">
       <v-layout row wrap>
@@ -309,13 +301,4 @@
 </script>
 
 <style scoped lang="scss">
-  .back-button {
-    cursor: pointer;
-    transition: background ease-in-out .3s;
-
-    &:hover {
-      background: $hover-background;
-    }
-  }
-
 </style>

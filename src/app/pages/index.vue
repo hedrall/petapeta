@@ -8,6 +8,15 @@
       <event-logs />
     </section>
 
+    <v-layout class="xs12 section"
+             style="display: flex;"
+             justify-center
+    >
+      <v-btn color="primary" @click="$router.push('/create')">
+        拡散依頼をする
+      </v-btn>
+    </v-layout>
+
     <!-- 投稿一覧 -->
     <section class="section xs12">
 
@@ -28,7 +37,10 @@
   import PostListPaginate from '~/components/PostListPaginate.vue';
 
   @Component( {
-    components: { EventLogs, PostsList, PostListPaginate }
+    components: {
+      EventLogs,
+      PostsList,
+      PostListPaginate }
   } )
   export default class extends MyVue {
     @Getter( "getEventLogs", { namespace: "event-logs" } ) getEventLogs;
@@ -44,10 +56,6 @@
     @Action( "fetchEventLogs", { namespace: "event-logs" } ) fetchEventLogs;
 
     @Action( "fetchPosts", { namespace: "posts" } ) fetchPosts;
-
-    components = {
-      PostListPaginate
-    };
 
     async mounted() {
       const tasks = [];
